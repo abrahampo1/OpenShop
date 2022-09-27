@@ -30,7 +30,8 @@ async function AddToCart(id) {
     cart.push({
       id: id,
       nombre: itemData.name,
-      precio: itemData.sell_base_price,
+      precio: itemData.precio,
+      iva: itemData.iva,
       cantidad: 1,
     });
   }
@@ -40,11 +41,11 @@ async function AddToCart(id) {
 }
 
 function LoadCart() {
-  $("#cart").html("");
+  $(".cart").html("");
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let total = 0;
   cart.forEach((value, key) => {
-    $("#cart").append(`
+    $(".cart").append(`
     <div class="list" onclick="LoadItem(${key})">
         <div class="l10">
             ${value.cantidad}
@@ -70,4 +71,28 @@ function CloseModal(id) {
 }
 function OpenModal(id) {
   $("#" + id).fadeIn("fast");
+}
+
+function PrecioSinIVA(precio, iva = 21) {
+  let mult = 1 + iva / 100;
+  return parseFloat(redondear(precio / mult));
+}
+
+function ObtenerIVA(precio, iva = 21) {
+  let precio_sin_iva = PrecioSinIVA(precio, iva);
+  let iva_calculado = precio - precio_sin_iva;
+  return parseFloat(redondear(iva_calculado));
+}
+
+function redondear(num, digitos = 2) {
+  num = num.toFixed(digitos);
+  return parseFloat(num);
+}
+
+function checkout(show = true) {
+  if (!show) {
+    $("#checkout").slideUp();
+  } else {
+    $("#checkout").slideDown();
+  }
 }

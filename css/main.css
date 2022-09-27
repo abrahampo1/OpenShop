@@ -1,9 +1,25 @@
+:root {
+    --background: whitesmoke;
+    --secondary-background: whitesmoke;
+    --secondary-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
+    --card-background: whitesmoke;
+    --dock-button-background: whitesmoke;
+
+
+    --main-text-color: black;
+    --secondary-text-color: rgb(23, 23, 23);
+
+    --button-background: whitesmoke;
+}
+
+
 body, html {
     width: 100%;
     height: 100%;
     margin: 0px;
     display: flex;
-    background-color: black;
+    background-color: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
 }
@@ -22,7 +38,8 @@ body, html {
 }
 
 .dock-content {
-    background-color: rgb(70, 70, 70);
+    background-color: var(--secondary-background);
+    box-shadow: var(--secondary-shadow);
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -52,7 +69,9 @@ body, html {
 }
 
 .card {
-    background-color: rgb(250, 250, 250);
+    background-color: var(--card-background);
+    box-shadow: var(--secondary-shadow);
+
     border-radius: 5px;
     overflow: hidden;
     width: 33%;
@@ -62,8 +81,9 @@ body, html {
     height: 110px;
 }
 
-.card.click {
+.click {
     cursor: pointer;
+    user-select: none;
 }
 
 .card.blue {
@@ -77,11 +97,11 @@ body, html {
 .card h2 {
     margin: 0px;
     padding-top: 15px;
-    color: black;
+    color: var(--main-text-color);
 }
 
 .card h3 {
-    color: black;
+    color: var(--main-text-color);
 }
 
 
@@ -94,13 +114,25 @@ body, html {
     box-sizing: border-box;
 }
 
+.card-text {
+    background-color: rgb(250, 250, 250);
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.black {
+    color: black !important;
+}
+
 button.dock-button {
     width: 100%;
     background: none;
     border: none;
     min-height: 100px;
-    background-color: black;
-    color: white;
+    background-color: var(--dock-button-background);
+    color: var(--main-text-color);
+    box-shadow: var(--secondary-shadow);
     text-align: center;
     border-radius: 10px;
     font-size: 30px;
@@ -112,10 +144,11 @@ button {
     background: none;
     border: none;
     min-height: 100px;
-    background-color: rgb(33, 33, 33);
+    background-color: var(--button-background);
     font-size: 30px;
     margin-bottom: 10px;
-    color: white;
+    color: var(--main-text-color);
+    box-shadow: var(--secondary-shadow);
     cursor: pointer;
 }
 
@@ -127,33 +160,37 @@ button.card {
 .table {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
+    margin-top: 10px;
 }
 
 .table .list {
     width: 100%;
     display: flex;
     background-color: whitesmoke;
+    box-shadow: var(--secondary-shadow);
     box-sizing: border-box;
     padding: 5px;
     padding-left: 5px;
     padding-right: 5px;
-    border-radius: 3px;
     font-size: 24px;
     margin-bottom: 2px;
     cursor: pointer;
     user-select: none;
+}
 
+.list.selected {
+    background-color: black;
+    color: white;
 }
 
 .table .list:first-child {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .table .list:last-child {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .l10 {
@@ -168,12 +205,20 @@ button.card {
     width: 30%;
 }
 
+.l50, .w50 {
+    width: 50%;
+}
+
 .l60 {
     width: 60%;
 }
 
 .l70, .w70 {
     width: 70%;
+}
+
+.l80, .w80 {
+    width: 80%;
 }
 
 .l100, .w100 {
@@ -194,18 +239,19 @@ button.card {
     box-sizing: border-box;
 }
 
+.p50 {
+    padding: 50px;
+    box-sizing: border-box;
+}
+
 .flex.xcenter {
     height: 100%;
     justify-content: center;
     align-items: center;
 }
 
-
-
-
-
 h1, h2, h3, h4, h5, h6 {
-    color: white;
+    color: var(--main-text-color);
 }
 
 .textcenter {
@@ -230,9 +276,10 @@ input:focus {
 
 .sm-cart {
     position: relative;
-    height: 80%;
+    height: calc(100% - 20px);
     width: 100%;
-    background-color: rgb(70, 70, 70);
+    background-color: var(--secondary-background);
+    box-shadow: var(--secondary-shadow);
     border-radius: 5px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -260,6 +307,8 @@ input:focus {
 .abfull {
     overflow: auto;
     height: 85%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .abfull::-webkit-scrollbar {
@@ -289,7 +338,8 @@ input:focus {
 
 .modal-content {
     width: 60%;
-    background-color: rgb(70, 70, 70);
+    background-color: var(--secondary-background);
+    box-shadow: var(--secondary-shadow);
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
@@ -360,7 +410,8 @@ input:focus {
 }
 
 .input .textfield {
-    background-color: whitesmoke;
+    background-color: var(--background);
+    box-shadow: var(--secondary-shadow);
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -394,4 +445,28 @@ input:focus {
 
 .touching {
     transform: scale(0.95);
+}
+
+.checkout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: var(--background);
+}
+
+.dock-content .card-text {
+    margin-bottom: 10px;
+    box-shadow: var(--secondary-shadow);
+}
+
+
+
+button.delete, .cancel{
+    background-color: rgb(255, 167, 167);
+    color: rgb(187, 34, 34) !important;
+}
+
+button.save{
+    background-color: rgb(175, 255, 175);
+    color: rgb(28, 135, 28);
 }
