@@ -1,4 +1,4 @@
-<div class="p10">
+<div class="p10 fade-in-bottom">
     <input type="
 text" placeholder="Buscar ticket por referencia" class="search">
     <div class="flex">

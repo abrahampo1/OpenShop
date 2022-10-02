@@ -22,12 +22,12 @@ async function AddToCart(id) {
     resource: "itemData",
     itemId: id,
   });
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
   let i;
-  if ((i = cart.find((o) => o.id === id))) {
-    cart[cart.indexOf(i)]["cantidad"]++;
+  if ((i = cart.items.find((o) => o.id === id))) {
+    cart.items[cart.items.indexOf(i)]["cantidad"]++;
   } else {
-    cart.push({
+    cart.items.push({
       id: id,
       nombre: itemData.name,
       precio: itemData.precio,
@@ -42,9 +42,9 @@ async function AddToCart(id) {
 
 function LoadCart() {
   $(".cart").html("");
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
   let total = 0;
-  cart.forEach((value, key) => {
+  cart.items.forEach((value, key) => {
     $(".cart").append(`
     <div class="list" onclick="LoadItem(${key})">
         <div class="l10">
@@ -61,7 +61,7 @@ function LoadCart() {
     total += parseFloat((value.cantidad * value.precio).toFixed(2));
   });
 
-  $("button.total").html("Cobrar " + total.toFixed(2) + "€");
+  $(".cart-total").html(total.toFixed(2) + "€");
 }
 
 function CloseModal(id) {
@@ -91,8 +91,164 @@ function redondear(num, digitos = 2) {
 
 function checkout(show = true) {
   if (!show) {
-    $("#checkout").slideUp();
+    $("#checkout").addClass("slide-out-bottom");
+    $("#checkout").removeClass("slide-in-bottom");
+    $(".closetag").css("transform", "rotate(0deg)");
+    setTimeout(() => {
+      $("#checkout").hide();
+    }, 500);
   } else {
-    $("#checkout").slideDown();
+    $("#checkout").show();
+    $("#checkout").removeClass("slide-out-bottom");
+    $("#checkout").addClass("slide-in-bottom");
+    $(".closetag").css("transform", "rotate(180deg)");
   }
+}
+
+function SelectFromTable(table, output) {
+  return new Promise((resolve, reject) => {
+    let cols = [];
+
+    output.forEach((element) => {
+      cols.push(element.column);
+    });
+
+    api({
+      resource: "SelectFromTable",
+      columns: cols,
+      table: table,
+    }).then((r) => {
+      resolve(r);
+    });
+  });
+}
+
+function HTMLFromTable(table, output) {
+  return new Promise((resolve, reject) => {
+    SelectFromTable(table, output).then((r) => {
+      let modal = document.createElement("div");
+      modal.classList.add("modal");
+      modal.style.zIndex = 1002;
+      let modal_content = document.createElement("div");
+      modal_content.classList.add("modal-content");
+      modal_content.classList.add("flex");
+      modal.appendChild(modal_content);
+      r.forEach((element) => {
+        let e = document.createElement("div");
+        e.classList.add("table-result");
+        output.forEach((col) => {
+          if (!col["hide"]) {
+            e.innerHTML += element[col["column"]];
+            e.innerHTML += "<br>";
+          }
+        });
+        e.onclick = () => {
+          resolve(element);
+          modal.remove();
+        };
+        modal_content.appendChild(e);
+      });
+      document.body.appendChild(modal);
+    });
+  });
+}
+
+function LoadItem(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || {
+    items: [],
+  };
+  let item = cart.items[id];
+  $("#cartItem .pu").text(item.precio);
+  $("#cartItem .iva").text(item.iva);
+  $("#cartItem #itemName").text(item.nombre);
+  $("#cartItem .ivaincl").text(
+    ObtenerIVA(item.precio, cart.items[id].iva) + "€"
+  );
+  $("#cartItem .total").text(
+    "Total " +
+      (cart.items[id].precio * cart.items[id].cantidad).toFixed(2) +
+      "€"
+  );
+  $("#cartItem .iva").on("DOMSubtreeModified", () => {
+    cart.items[id].iva = parseFloat($("#cartItem .iva").text());
+    $("#cartItem .ivaincl").text(
+      ObtenerIVA(item.precio, cart.items[id].iva) + "€"
+    );
+  });
+  $("#cartItem .pu").on("DOMSubtreeModified", () => {
+    cart.items[id].precio = parseFloat($("#cartItem .pu").text());
+    $("#cartItem .total").text(
+      "Total " +
+        (cart.items[id].precio * cart.items[id].cantidad).toFixed(2) +
+        "€"
+    );
+    $("#cartItem .ivaincl").text(
+      ObtenerIVA(item.precio, cart.items[id].iva) + "€"
+    );
+  });
+  $("#cartItem .cantidad").text(item.cantidad);
+  $("#cartItem .cantidad").on("DOMSubtreeModified", () => {
+    cart.items[id].cantidad = parseInt($("#cartItem .cantidad").text());
+    $("#cartItem .total").text(
+      "Total " +
+        (cart.items[id].precio * cart.items[id].cantidad).toFixed(2) +
+        "€"
+    );
+  });
+  if (!cart.items[id].descuentos) {
+    cart.items[id].descuentos = {};
+  }
+  $("#cartItem .descuentos").html("");
+  Object.entries(cart.items[id].descuentos).forEach(([key, valor]) => {
+    console.log(valor);
+    $("#cartItem .descuentos").append(
+      `<div class="mark">${valor.nombre}</div>`
+    );
+  });
+  $("#cartItem .descuentos").on("click", () => {
+    HTMLFromTable("mpp_descuentos", [
+      {
+        column: "nombre",
+      },
+      {
+        column: "valor",
+        hide: true,
+      },
+      {
+        column: "tipo",
+        hide: true,
+      },
+    ]).then((r) => {
+      cart.items[id].descuentos[r.id] = r;
+
+      $("#cartItem .descuentos").html("");
+      Object.entries(cart.items[id].descuentos).forEach(([key, valor]) => {
+        console.log(valor);
+        $("#cartItem .descuentos").append(
+          `<div class="mark">${valor.nombre}</div>`
+        );
+      });
+    });
+  });
+  $("#cartItem .save").on("click", () => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+    UnLoadItem();
+  });
+  $("#cartItem .delete").on("click", () => {
+    cart.items.splice(id, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    UnLoadItem();
+  });
+  OpenModal("cartItem");
+}
+
+function UnLoadItem() {
+  $("#cartItem .descuentos").off("click");
+  $("#cartItem .save").off("click");
+  $("#cartItem .delete").off("click");
+  $("#cartItem .iva").off("DOMSubtreeModified");
+  $("#cartItem .cantidad").off("DOMSubtreeModified");
+  $("#cartItem .pu").off("DOMSubtreeModified");
+  CloseModal("cartItem");
+  LoadCart();
 }

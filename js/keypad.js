@@ -45,6 +45,12 @@ function KeyPadFocus(inp) {
   $(inp).addClass("focused");
   FocusedInput = inp;
   $("#keypad").fadeIn("fast");
+  $("#keypad").offset({
+    top: inp.offsetTop + $(inp).height(),
+    left: inp.offsetLeft,
+  });
+  $("#keypad").attr("data-y", inp.offsetTop + $(inp).height());
+  $("#keypad").attr("data-x", inp.offsetLeft);
 }
 
 KeyPad();

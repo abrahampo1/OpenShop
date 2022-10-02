@@ -3,14 +3,14 @@
     --secondary-background: whitesmoke;
     --secondary-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
-    --card-background: whitesmoke;
+    --card-background: #fff;
     --dock-button-background: whitesmoke;
 
 
     --main-text-color: black;
-    --secondary-text-color: rgb(23, 23, 23);
+    --secondary-text-color: #ffffff;
 
-    --button-background: whitesmoke;
+    --button-background: #1990f9;
 }
 
 
@@ -18,33 +18,33 @@ body, html {
     width: 100%;
     height: 100%;
     margin: 0px;
-    display: flex;
     background-color: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
 }
 
 #app {
-    width: 75%;
-    height: 100%;
+    width: 100%;
+    height: 90%;
     box-sizing: border-box;
 }
 
 #dock {
-    width: 25%;
-    height: 100%;
+    width: 100%;
+    height: 10%;
     box-sizing: border-box;
     padding: 10px;
+    box-shadow: var(--secondary-shadow);
 }
 
 .dock-content {
     background-color: var(--secondary-background);
-    box-shadow: var(--secondary-shadow);
     width: 100%;
     height: 100%;
-    border-radius: 10px;
-    padding: 10px;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .flex {
@@ -71,7 +71,6 @@ body, html {
 .card {
     background-color: var(--card-background);
     box-shadow: var(--secondary-shadow);
-
     border-radius: 5px;
     overflow: hidden;
     width: 33%;
@@ -129,15 +128,22 @@ button.dock-button {
     width: 100%;
     background: none;
     border: none;
-    min-height: 100px;
     background-color: var(--dock-button-background);
     color: var(--main-text-color);
-    box-shadow: var(--secondary-shadow);
+    box-shadow: none;
     text-align: center;
-    border-radius: 10px;
     font-size: 30px;
     cursor: pointer;
     margin-bottom: 10px;
+    border-right: 1px solid gray;
+}
+
+ button.dock-button:last-child {
+    border: none;
+}
+
+.mt10 {
+    margin-top: 10px;
 }
 
 button {
@@ -146,8 +152,10 @@ button {
     min-height: 100px;
     background-color: var(--button-background);
     font-size: 30px;
-    margin-bottom: 10px;
-    color: var(--main-text-color);
+    padding: 20px;
+    font-size: 20px;
+    box-sizing: border-box;
+    color: var(--secondary-text-color);
     box-shadow: var(--secondary-shadow);
     cursor: pointer;
 }
@@ -167,7 +175,6 @@ button.card {
     width: 100%;
     display: flex;
     background-color: whitesmoke;
-    box-shadow: var(--secondary-shadow);
     box-sizing: border-box;
     padding: 5px;
     padding-left: 5px;
@@ -176,22 +183,16 @@ button.card {
     margin-bottom: 2px;
     cursor: pointer;
     user-select: none;
+    border-top: 1px solid rgb(232, 232, 232);
+    border-bottom: 1px solid rgb(232, 232, 232);
 }
 
 .list.selected {
-    background-color: black;
+    background-color: var(--button-background);
     color: white;
+    border-radius: 5px;
 }
 
-.table .list:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-.table .list:last-child {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
 
 .l10 {
     width: 10%;
@@ -223,6 +224,10 @@ button.card {
 
 .l100, .w100 {
     width: 100%;
+}
+
+.h100{
+    height: 100%;
 }
 
 .x100 {
@@ -278,7 +283,7 @@ input:focus {
     position: relative;
     height: calc(100% - 20px);
     width: 100%;
-    background-color: var(--secondary-background);
+    background-color: var(--card-background);
     box-shadow: var(--secondary-shadow);
     border-radius: 5px;
     border-top-left-radius: 10px;
@@ -297,11 +302,8 @@ input:focus {
 
 .sm-cart button {
     width: 100%;
-    font-size: 30px;
     min-height: 0px;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .abfull {
@@ -353,7 +355,7 @@ input:focus {
 }
 
 .modal-content button {
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 20px;
     height: auto;
     min-height: 0px;
@@ -364,7 +366,7 @@ input:focus {
     position: absolute;
     z-index: 2000;
     width: 300px;
-    background-color: rgb(70, 70, 70);
+    background-color: rgb(246, 246, 246);
     padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
@@ -454,6 +456,22 @@ input:focus {
     background-color: var(--background);
 }
 
+.checkout #app {
+    width: 70%;
+    height: 100%;
+}
+
+.checkout .sm-cart {
+    height: 100%;
+}
+
+.checkout .context {
+    width: 30%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 .dock-content .card-text {
     margin-bottom: 10px;
     box-shadow: var(--secondary-shadow);
@@ -461,12 +479,76 @@ input:focus {
 
 
 
-button.delete, .cancel{
+button.delete, .cancel {
     background-color: rgb(255, 167, 167);
     color: rgb(187, 34, 34) !important;
 }
 
-button.save{
-    background-color: rgb(175, 255, 175);
-    color: rgb(28, 135, 28);
+
+
+#cartItem {
+    z-index: 1001;
+}
+
+button.secondary {
+    background-color: #d9edff;
+    color: #1990f9;
+}
+
+.modal .header {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(195, 195, 195);
+    padding-bottom: 10px;
+    position: relative;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+iconify-icon[ icon="ep:close-bold"] {
+    background-color: rgb(215, 215, 215);
+    font-size: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+iconify-icon[ icon="ep:close-bold"]:hover {
+    background-color: rgb(172, 172, 172);
+
+}
+
+.closetag {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    top: 20px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.clientcard {
+    box-shadow: var(--secondary-shadow);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.table-result, .mark {
+    box-shadow: var(--secondary-shadow);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
 }

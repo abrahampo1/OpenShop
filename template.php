@@ -5,20 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
     <div id="dock">
         <div class="dock-content">
             <button class="dock-button" onclick="redirect('catalog')">
-                Cátalogo
+                <iconify-icon inline icon="carbon:shopping-catalog"></iconify-icon> Cátalogo
+            </button>
+            <button class="dock-button" onclick="redirect('parque')">
+                <iconify-icon inline icon="icon-park-outline:party-balloon"></iconify-icon> Parque
             </button>
             <button class="dock-button" onclick="redirect('tickets')">
-                Tickets
+                <iconify-icon inline icon="carbon:receipt"></iconify-icon> Tickets
             </button>
             <button class="dock-button" onclick="redirect('caja')">
-                Caja
+                <iconify-icon inline icon="la:cash-register"></iconify-icon> Caja
             </button>
         </div>
     </div>
@@ -50,13 +55,16 @@
 </div>
 
 
-<div class="modal" id="checkout">
+<div class="modal" id="checkout" style="display: none;">
     <div class="checkout">
+        <div class="closetag" onclick="checkout(false)">
+            <iconify-icon inline icon="akar-icons:chevron-up"></iconify-icon>
+        </div>
         <div id="app">
             <div class="p50">
-                <h1>Total 4.00€</h1>
+                <h1>Total <strong class="cart-total">4.00€</strong></h1>
                 <h2>Deglose de venta</h2>
-                <div class="table">
+                <div class="table cart">
                     <div class="list">
                         <div class="l10 textcenter">1</div>
                         <div class="l50">CocaCola</div>
@@ -66,29 +74,41 @@
                 </div>
             </div>
         </div>
-        <div id="dock">
-            <div class="dock-content">
-                <div class="card-text click">
-                    <h2 class="black textcenter">Realizar Pago</h2>
-                </div>
-                <div class="card-text click">
-                    <h4 class="black textcenter">Aplicar Descuentos</h4>
-                </div>
-                <h3>¿Como va a pagar el cliente?</h3>
-                <div class="table">
-                    <div class="list selected">
-                        Efectivo
+        <div class="context">
+            <div class="sm-cart">
+                <div>
+                    <button class="primary">
+                        Realizar el Pago
+                    </button>
+                    <br>
+                    <br>
+                    <div class="center click clientcard">
+                        <h2 class="black">
+                            <iconify-icon inline icon="bi:person-fill"></iconify-icon> Público en general
+                        </h2>
                     </div>
-                    <div class="list">
-                        Tarjeta
+                    <h3>¿Como va a pagar el cliente?</h3>
+                    <div class="table" id="metododepago">
+                        <?php
+                        
+                        foreach (sql_array("SELECT * FROM mpp_tipo_pago") as $key => $value) {
+                            ?>
+
+                        <div data-id="<?= $value['id'] ?>"
+                            class="list <?= ($value['defecto'] == 1)? 'selected': ''  ?>">
+                            <?= $value['nombre'] ?>
+                        </div>
+
+                        <?php
+                        }
+                        
+                        ?>
+
                     </div>
-                    <div class="list">
-                        Transferencia Bancaria
-                    </div>
-                </div>
-                <br>
-                <div class="card-text click cancel" onclick="checkout(false)">
-                    <h4 class=" textcenter cancel">Cancelar</h4>
+                    <br>
+                    <button class="card-text click secondary" onclick="checkout(false)">
+                        Cancelar
+                    </button>
                 </div>
             </div>
         </div>
@@ -98,3 +118,18 @@
 <script src="js/draggable.js"></script>
 <script src="js/keypad.js"></script>
 <script src="js/printer.js"></script>
+
+
+<script>
+document.body.onload = function() {
+    LoadCart();
+
+    $("#metododepago .list").on("click", (data) => {
+        let element = data.target;
+        $("#metododepago .selected").removeClass("selected");
+        $(element).addClass("selected");
+
+    });
+
+}
+</script>
