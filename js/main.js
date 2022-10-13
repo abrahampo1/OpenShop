@@ -46,7 +46,7 @@ function LoadCart() {
   let total = 0;
   cart.items.forEach((value, key) => {
     $(".cart").append(`
-    <div class="list" onclick="LoadItem(${key})">
+    <div class="list" onclick="CartItem(${key})">
         <div class="l10">
             ${value.cantidad}
         </div>
@@ -251,4 +251,122 @@ function UnLoadItem() {
   $("#cartItem .pu").off("DOMSubtreeModified");
   CloseModal("cartItem");
   LoadCart();
+}
+
+function CartItem(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || {};
+  let article = cart.items[id];
+  console.log(article);
+  create_modal([
+    {
+      type: "text",
+      text: "Información de Articulo",
+      tag: "h1",
+    },
+    {
+      type: "div",
+      tag: "div",
+      classList: ["flex"],
+      content: [
+        {
+          type: "text",
+          tag: "h2",
+          text: "Nombre",
+        },
+        {
+          type: "input",
+          tag: "input",
+          value: article["nombre"],
+          required: true,
+          placeholder: "Nombre....",
+          name: "nombre",
+          classList: ["w50"],
+        },
+      ],
+    },
+    {
+      type: "div",
+      tag: "div",
+      classList: ["flex"],
+      content: [
+        {
+          type: "text",
+          tag: "h2",
+          text: "Precio con IVA (€)",
+        },
+        {
+          type: "input",
+          tag: "input",
+          required: true,
+          placeholder: "Precio....",
+          name: "precio",
+          value: parseFloat(article["precio"]).toFixed(2),
+          classList: ["w50"],
+        },
+      ],
+    },
+    {
+      type: "div",
+      tag: "div",
+      classList: ["flex"],
+      content: [
+        {
+          type: "text",
+          tag: "h2",
+          text: "Cantidad",
+        },
+        {
+          type: "input",
+          tag: "input",
+          placeholder: "Cantidad....",
+          required: true,
+          name: "cantidad",
+          value: article["cantidad"],
+          classList: ["w50"],
+        },
+      ],
+    },
+    {
+      type: "div",
+      tag: "div",
+      classList: ["flex"],
+      content: [
+        {
+          type: "text",
+          tag: "h2",
+          text: "IVA (%)",
+        },
+        {
+          type: "input",
+          tag: "input",
+          placeholder: "IVA....",
+          required: true,
+          name: "iva",
+          value: article["iva"],
+          classList: ["w50"],
+        },
+      ],
+    },
+    {
+      type: "text",
+      tag: "h2",
+      classList: ["link", "error"],
+      onclick: function (el) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
+        cart.items.splice(id, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        LoadCart();
+        $(el.target).parent().parent().fadeOut("fast");
+      },
+      text: "Eliminar del carrito",
+    },
+  ]).then((r) => {
+    console.log(r);
+    Object.entries(r).forEach(([key, value]) => {
+      cart.items[id][key] = value;
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    LoadCart();
+  });
 }

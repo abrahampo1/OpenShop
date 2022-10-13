@@ -30,15 +30,19 @@ body, html {
 }
 
 #dock {
+    position: absolute;
+    bottom: 0px;
     width: 100%;
     height: 10%;
     box-sizing: border-box;
     padding: 10px;
     box-shadow: var(--secondary-shadow);
+    background-color: var(--card-background);
+    z-index: 100;
 }
 
 .dock-content {
-    background-color: var(--secondary-background);
+    background-color: var(--card-background);
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -128,7 +132,7 @@ button.dock-button {
     width: 100%;
     background: none;
     border: none;
-    background-color: var(--dock-button-background);
+    background-color: var(--card-background);
     color: var(--main-text-color);
     box-shadow: none;
     text-align: center;
@@ -138,7 +142,7 @@ button.dock-button {
     border-right: 1px solid gray;
 }
 
- button.dock-button:last-child {
+button.dock-button:last-child {
     border: none;
 }
 
@@ -149,7 +153,6 @@ button.dock-button {
 button {
     background: none;
     border: none;
-    min-height: 100px;
     background-color: var(--button-background);
     font-size: 30px;
     padding: 20px;
@@ -226,7 +229,7 @@ button.card {
     width: 100%;
 }
 
-.h100{
+.h100 {
     height: 100%;
 }
 
@@ -338,7 +341,7 @@ input:focus {
     justify-content: center;
 }
 
-.modal-content {
+.modal .modal-content {
     width: 60%;
     background-color: var(--secondary-background);
     box-shadow: var(--secondary-shadow);
@@ -348,13 +351,13 @@ input:focus {
     text-align: center;
 }
 
-.modal-content hr {
+.modal .modal-content hr {
     height: 1px;
     background-color: #ccc;
     border: none;
 }
 
-.modal-content button {
+.modal .modal-content button {
     border-radius: 5px;
     font-size: 20px;
     height: auto;
@@ -551,4 +554,22 @@ iconify-icon[ icon="ep:close-bold"]:hover {
     border-radius: 5px;
     font-size: 25px;
     cursor: pointer;
+}
+
+.w30{
+    width: 30%;
+}
+
+.w70{
+    width: 70%;
+}
+
+.sidebar{
+    background-color: var(--card-background);
+    z-index: 10;
+    box-shadow: var(--secondary-shadow);
+}
+
+.sidebar .link{
+    font-size: 30px;
 }

@@ -3,14 +3,14 @@
 
 include 'functions.php';
 
-switch (get('resource', true)) {
+switch (post('resource', true)) {
     case 'itemData':
-        $itemID = get('itemId');
+        $itemID = post('itemId');
         echo json_encode(sql_data("SELECT * FROM tpv_inventory WHERE id = $itemID"));
         break;
     case 'SelectFromTable':
-        $table = get('table');
-        $columns = get('columns');
+        $table = post('table');
+        $columns = post('columns');
         $cols = '';
         foreach ($columns as $value) {
             $cols .= $value . ',';

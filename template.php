@@ -25,6 +25,9 @@
             <button class="dock-button" onclick="redirect('caja')">
                 <iconify-icon inline icon="la:cash-register"></iconify-icon> Caja
             </button>
+            <button class="dock-button" onclick="redirect('ajustes')">
+                <iconify-icon inline icon="akar-icons:settings-horizontal"></iconify-icon> Ajustes
+            </button>
         </div>
     </div>
 </body>
@@ -77,7 +80,7 @@
         <div class="context">
             <div class="sm-cart">
                 <div>
-                    <button class="primary">
+                    <button class="primary" onclick="print(); checkout(false)">
                         Realizar el Pago
                     </button>
                     <br>
@@ -95,6 +98,7 @@
                             ?>
 
                         <div data-id="<?= $value['id'] ?>"
+                            onclick="seleccionar_pago(<?= $value['id'] ?>, '<?= $value['nombre'] ?>')"
                             class="list <?= ($value['defecto'] == 1)? 'selected': ''  ?>">
                             <?= $value['nombre'] ?>
                         </div>
@@ -115,10 +119,12 @@
     </div>
 </div>
 
+<script src="js/kioskboard-aio-2.2.0.min.js"></script>
 <script src="js/draggable.js"></script>
 <script src="js/keypad.js"></script>
 <script src="js/printer.js"></script>
-
+<script src="js/OpenModals.js"></script>
+<link rel="stylesheet" href="js/OpenModals.css">
 
 <script>
 document.body.onload = function() {
@@ -132,4 +138,24 @@ document.body.onload = function() {
     });
 
 }
+
+
+KioskBoard.init({
+    keysJsonUrl: 'js/kioskboard-keys-spanish.json',
+    language: "es",
+    theme: "light",
+    capsLockActive: true,
+    allowRealKeyboard: false,
+    allowMobileKeyboard: false,
+    cssAnimations: true,
+    cssAnimationsDuration: 360,
+    cssAnimationsStyle: "slide",
+    keysAllowSpacebar: true,
+    keysSpacebarText: "Space",
+    keysFontFamily: "sans-serif",
+    keysFontSize: "22px",
+    keysFontWeight: "normal",
+    keysIconSize: "25px",
+    autoScroll: true,
+});
 </script>
