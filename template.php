@@ -8,6 +8,31 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
+    <script src="js/OpenModals.js"></script>
+    <script src="js/draggable.js"></script>
+    <script src="js/keypad.js"></script>
+    <script src="js/printer.js"></script>
+    <link rel="stylesheet" href="js/OpenModals.css">
+    <script>
+        KioskBoard.init({
+            keysJsonUrl: "js/kioskboard-keys-spanish.json",
+            language: "es",
+            theme: "light",
+            capsLockActive: true,
+            allowRealKeyboard: false,
+            allowMobileKeyboard: false,
+            cssAnimations: true,
+            cssAnimationsDuration: 360,
+            cssAnimationsStyle: "slide",
+            keysAllowSpacebar: true,
+            keysSpacebarText: "Space",
+            keysFontFamily: "sans-serif",
+            keysFontSize: "22px",
+            keysFontWeight: "normal",
+            keysIconSize: "25px",
+            autoScroll: true,
+        });
+    </script>
 </head>
 
 <body>
@@ -93,19 +118,17 @@
                     <h3>¿Como va a pagar el cliente?</h3>
                     <div class="table" id="metododepago">
                         <?php
-                        
-                        foreach (sql_array("SELECT * FROM mpp_tipo_pago") as $key => $value) {
-                            ?>
 
-                        <div data-id="<?= $value['id'] ?>"
-                            onclick="seleccionar_pago(<?= $value['id'] ?>, '<?= $value['nombre'] ?>')"
-                            class="list <?= ($value['defecto'] == 1)? 'selected': ''  ?>">
-                            <?= $value['nombre'] ?>
-                        </div>
+                        foreach (sql_array("SELECT * FROM mpp_tipo_pago") as $key => $value) {
+                        ?>
+
+                            <div data-id="<?= $value['id'] ?>" onclick="seleccionar_pago(<?= $value['id'] ?>, '<?= $value['nombre'] ?>')" class="list <?= ($value['defecto'] == 1) ? 'selected' : ''  ?>">
+                                <?= $value['nombre'] ?>
+                            </div>
 
                         <?php
                         }
-                        
+
                         ?>
 
                     </div>
@@ -119,43 +142,19 @@
     </div>
 </div>
 
-<script src="js/kioskboard-aio-2.2.0.min.js"></script>
-<script src="js/draggable.js"></script>
-<script src="js/keypad.js"></script>
-<script src="js/printer.js"></script>
-<script src="js/OpenModals.js"></script>
-<link rel="stylesheet" href="js/OpenModals.css">
+
 
 <script>
-document.body.onload = function() {
-    LoadCart();
-
-    $("#metododepago .list").on("click", (data) => {
-        let element = data.target;
-        $("#metododepago .selected").removeClass("selected");
-        $(element).addClass("selected");
-
+    $("body").on("load", () => {
+        $("#metododepago .list").on("click", (data) => {
+            let element = data.target;
+            $("#metododepago .selected").removeClass("selected");
+            $(element).addClass("selected");
+        });
+        LoadCart();
+        console.log('hola')
     });
-
-}
-
-
-KioskBoard.init({
-    keysJsonUrl: 'js/kioskboard-keys-spanish.json',
-    language: "es",
-    theme: "light",
-    capsLockActive: true,
-    allowRealKeyboard: false,
-    allowMobileKeyboard: false,
-    cssAnimations: true,
-    cssAnimationsDuration: 360,
-    cssAnimationsStyle: "slide",
-    keysAllowSpacebar: true,
-    keysSpacebarText: "Space",
-    keysFontFamily: "sans-serif",
-    keysFontSize: "22px",
-    keysFontWeight: "normal",
-    keysIconSize: "25px",
-    autoScroll: true,
-});
+    document.body.onload = () => {
+        console.log('hola')
+    }
 </script>

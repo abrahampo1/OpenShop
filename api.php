@@ -19,6 +19,12 @@ switch (post('resource', true)) {
         $cols = substr($cols, 0, -1);
         echo json_encode(sql_array("SELECT id, $cols FROM $table"));
         break;
+    case 'obtener_tabla':
+        $table = post('tabla');
+        $column = post('columna');
+
+        echo json_encode(sql_array("SELECT id, $column FROM $table"));
+        break;
     default:
         # code...
         break;

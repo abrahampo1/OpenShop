@@ -1,6 +1,6 @@
 let output = {};
 const KioskBoard = require("kioskboard");
-
+console.log('hola')
 function create_modal(
   data = [
     { type: "text", tag: "h1", text: "Example" },
@@ -97,7 +97,7 @@ function create_modal(
           el.innerHTML =
             '<iconify-icon inline icon="line-md:loading-twotone-loop"></iconify-icon>';
           api({
-            recurso: "obtener_registro",
+            resource: "obtener_registro",
             tabla: element.ajaxvalue.table,
             id: element.ajaxvalue.id,
             where: element.ajaxvalue.where,
@@ -122,7 +122,7 @@ function create_modal(
         }
         if (element.ajaxvalue) {
           api({
-            recurso: "obtener_registro",
+            resource: "obtener_registro",
             tabla: element.ajaxvalue.table,
             id: element.ajaxvalue.id,
             where: element.ajaxvalue.where,
@@ -160,7 +160,7 @@ function create_modal(
         placeholder.innerText = element.placeholder;
         el.appendChild(placeholder);
         api({
-          recurso: "obtener_tabla",
+          resource: "obtener_tabla",
           tabla: element.table,
           columna: element.column,
         }).then((r) => {

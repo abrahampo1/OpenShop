@@ -62,15 +62,7 @@ body, html {
     justify-content: left;
 }
 
-.focus {
-    box-sizing: border-box;
-    margin-right: 5px;
-    background-color: black;
-    color: white;
-    font-size: 15px;
-    padding: 5px;
-    border-radius: 10px;
-}
+
 
 .card {
     background-color: var(--card-background);

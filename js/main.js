@@ -18,10 +18,13 @@ function api(data, method = "GET") {
 }
 
 async function AddToCart(id) {
-  let itemData = await api({
-    resource: "itemData",
-    itemId: id,
-  });
+  let itemData = await api(
+    {
+      resource: "itemData",
+      itemId: id,
+    },
+    "POST"
+  );
   let cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
   let i;
   if ((i = cart.items.find((o) => o.id === id))) {
@@ -348,6 +351,28 @@ function CartItem(id) {
       ],
     },
     {
+      type: "div",
+      tag: "div",
+      classList: ["flex"],
+      content: [
+        {
+          type: "text",
+          tag: "h2",
+          text: "Descuento",
+        },
+        {
+          type: "select",
+          tag: "select",
+          placeholder: "Selecciona un descuento",
+          table: "descuentos",
+          column: "nombre",
+          name: "select",
+          classList: ["w50"],
+        },
+      ],
+    },
+
+    {
       type: "text",
       tag: "h2",
       classList: ["link", "error"],
@@ -370,3 +395,7 @@ function CartItem(id) {
     LoadCart();
   });
 }
+
+setTimeout(() => {
+  LoadCart();
+}, 100);

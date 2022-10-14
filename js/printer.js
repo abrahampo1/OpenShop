@@ -16,7 +16,7 @@ function IVA(precio, iva) {
   return parseFloat((precio - PrecioSinIVA(precio, iva)).toFixed(2));
 }
 const options = {
-  preview: false, // Preview in window or print
+  preview: true, // Preview in window or print
   silent: true,
   width: "300px", //  width of content body
   margin: "0 0 0 0", // margin of content body
