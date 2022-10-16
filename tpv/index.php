@@ -1,18 +1,18 @@
 <?php
-include 'router.php';
-include 'functions.php';
+include '../router.php';
+include '../functions.php';
 
 ?>
-<script src="js/main.js"></script>
+<script src="/js/main.js"></script>
 <?php
 
-Route::add('/', function () {
+Route::add("/tpv/", function () {
     ?><div id="app"><?php
     include 'views/catalog/index.php';
     ?></div><?php
 });
 
-Route::add('/([a-z-0-9-]*)', function ($var1) {
+Route::add('/tpv/([a-z-0-9-]*)', function ($var1) {
     $dir = 'views';
     if (file_exists($dir . '/' . $var1 . '/index.php')) {
         

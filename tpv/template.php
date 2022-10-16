@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <script src="js/OpenModals.js"></script>
-    <script src="js/draggable.js"></script>
-    <script src="js/keypad.js"></script>
-    <script src="js/printer.js"></script>
-    <link rel="stylesheet" href="js/OpenModals.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <script src="/js/OpenModals.js"></script>
+    <script src="/js/draggable.js"></script>
+    <script src="/js/keypad.js"></script>
+    <script src="/js/printer.js"></script>
+    <link rel="stylesheet" href="/js/OpenModals.css">
     <script>
         KioskBoard.init({
             keysJsonUrl: "js/kioskboard-keys-spanish.json",

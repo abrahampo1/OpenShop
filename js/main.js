@@ -366,10 +366,15 @@ function CartItem(id) {
           placeholder: "Selecciona un descuento",
           table: "descuentos",
           column: "nombre",
-          name: "select",
+          name: "descuento",
           classList: ["w50"],
         },
       ],
+    },
+    {
+      type: "text",
+      tag: "div",
+      text: '<hr>'
     },
 
     {
