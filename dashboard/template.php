@@ -10,6 +10,7 @@
     <script src="/js/OpenModals.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="/js/classicges.js"></script>
     <title>OpenDashboard</title>
 </head>
 
@@ -49,6 +50,47 @@
                 </div>
             </div>
         </div>
+        <div class="sidebar-app-list ">
+            <div class="lcontent">
+                Clientes
+                <iconify-icon inline icon="akar-icons:chevron-right"></iconify-icon>
+            </div>
+            <div class="list hide fade-in-left">
+                <div class="sidebar-app-btn">
+                    <a class="content" href="clientes">
+                        <iconify-icon style="background-color: purple;" inline icon="bi:person-lines-fill"></iconify-icon> Clientes
+                    </a>
+                </div>
+                <div class="sidebar-app-btn">
+                    <a class="content" href="fidelizacion">
+                        <iconify-icon style="background-color: purple;" inline icon="charm:star"></iconify-icon> Fidelización
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-app-list ">
+            <div class="lcontent">
+                Pagos
+                <iconify-icon inline icon="akar-icons:chevron-right"></iconify-icon>
+            </div>
+            <div class="list hide fade-in-left">
+                <div class="sidebar-app-btn">
+                    <a class="content" href="facturas">
+                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice-dollar"></iconify-icon> Facturas
+                    </a>
+                </div>
+                <div class="sidebar-app-btn">
+                    <a class="content" href="presupuestos">
+                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice"></iconify-icon> Presupuestos
+                    </a>
+                </div>
+                <div class="sidebar-app-btn">
+                    <a class="content" href="albaranes">
+                        <iconify-icon style="background-color: navy;" inline icon="nimbus:invoice"></iconify-icon> Albaranes
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="background"></div>
 </body>
@@ -56,30 +98,33 @@
 </html>
 
 <script>
-$('.sidebar-app-list').on('click', (e => {
-    $('.sidebar-app-list').removeClass('selected')
-    let h = $(e.currentTarget).find('.list').hasClass('hide')
-    $(e.currentTarget).find('.list').addClass('hide')
-    if (h) {
-        $(e.currentTarget).find('.list').removeClass('hide')
-        $(e.currentTarget).addClass('selected')
-    } else {
-        $(e.currentTarget).find('.list').addClass('hide')
+    $('.sidebar-app-list').on('click', (e => {
+        $('.sidebar-app-list').removeClass('selected')
+        let h = $(e.currentTarget).find('.list').hasClass('hide')
+        $('.sidebar-app-list .list').addClass('hide')
+        if (h) {
+            $(e.currentTarget).find('.list').removeClass('hide')
+            $(e.currentTarget).addClass('selected')
+        } else {
+            $(e.currentTarget).find('.list').addClass('hide')
 
+        }
+
+
+    }))
+    $('#background').fadeOut('fast')
+    $('#background').on('click', (e => {
+        toggle_sidebar();
+    }))
+
+    function toggle_sidebar() {
+        $('.sidebar').toggleClass('hide');
+        $('.index').toggleClass('maximized')
+        $('.sidebar-app-list .list').addClass('hide')
+        $('#background').fadeToggle('fast')
+        $('.sidebar-app-list').removeClass('selected')
     }
 
-
-}))
-$('#background').fadeOut('fast')
-$('#background').on('click', (e => {
-    toggle_sidebar();
-}))
-
-function toggle_sidebar() {
-    $('.sidebar').toggleClass('hide');
-    $('.index').toggleClass('maximized')
-    $('.sidebar-app-list .list').addClass('hide')
-    $('#background').fadeToggle('fast')
-    $('.sidebar-app-list').removeClass('selected')
-}
+    const Clasges = new ClassicGes('http://92.187.198.99', '5000')
+    Clasges.query('select * from clientes')
 </script>

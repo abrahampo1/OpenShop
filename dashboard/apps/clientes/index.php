@@ -1,10 +1,7 @@
 <div class="flex">
     <div class="w20">
-        <div class="sidebutton" data-page="catalog">
-            Cátalogo de Artículos
-        </div>
-        <div class="sidebutton" data-page="opciones">
-            Opciones
+        <div class="sidebutton" data-page="directory">
+            Directorio
         </div>
         <div class="sidebutton" data-page="iva">
             IVA
