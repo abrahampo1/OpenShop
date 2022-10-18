@@ -57,12 +57,14 @@
             <div class="list hide fade-in-left">
                 <div class="sidebar-app-btn">
                     <a class="content" href="clientes">
-                        <iconify-icon style="background-color: purple;" inline icon="bi:person-lines-fill"></iconify-icon> Clientes
+                        <iconify-icon style="background-color: purple;" inline icon="bi:person-lines-fill">
+                        </iconify-icon> Clientes
                     </a>
                 </div>
                 <div class="sidebar-app-btn">
                     <a class="content" href="fidelizacion">
-                        <iconify-icon style="background-color: purple;" inline icon="charm:star"></iconify-icon> Fidelización
+                        <iconify-icon style="background-color: purple;" inline icon="charm:star"></iconify-icon>
+                        Fidelización
                     </a>
                 </div>
             </div>
@@ -75,17 +77,20 @@
             <div class="list hide fade-in-left">
                 <div class="sidebar-app-btn">
                     <a class="content" href="facturas">
-                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice-dollar"></iconify-icon> Facturas
+                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice-dollar">
+                        </iconify-icon> Facturas
                     </a>
                 </div>
                 <div class="sidebar-app-btn">
                     <a class="content" href="presupuestos">
-                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice"></iconify-icon> Presupuestos
+                        <iconify-icon style="background-color: navy;" inline icon="la:file-invoice"></iconify-icon>
+                        Presupuestos
                     </a>
                 </div>
                 <div class="sidebar-app-btn">
                     <a class="content" href="albaranes">
-                        <iconify-icon style="background-color: navy;" inline icon="nimbus:invoice"></iconify-icon> Albaranes
+                        <iconify-icon style="background-color: navy;" inline icon="nimbus:invoice"></iconify-icon>
+                        Albaranes
                     </a>
                 </div>
             </div>
@@ -98,7 +103,8 @@
             <div class="list hide fade-in-left">
                 <div class="sidebar-app-btn">
                     <a class="content" href="settings">
-                        <iconify-icon style="background-color: gray;" inline icon="ci:settings"></iconify-icon> Ajustes de la aplicación
+                        <iconify-icon style="background-color: gray;" inline icon="ci:settings"></iconify-icon> Ajustes
+                        de la aplicación
                     </a>
                 </div>
 
@@ -111,38 +117,35 @@
 </html>
 
 <script>
-    $('.sidebar-app-list').on('click', (e => {
-        $('.sidebar-app-list').removeClass('selected')
-        let h = $(e.currentTarget).find('.list').hasClass('hide')
-        $('.sidebar-app-list .list').addClass('hide')
-        if (h) {
-            $(e.currentTarget).find('.list').removeClass('hide')
-            $(e.currentTarget).addClass('selected')
-        } else {
-            $(e.currentTarget).find('.list').addClass('hide')
+$('.sidebar-app-list').on('click', (e => {
+    $('.sidebar-app-list').removeClass('selected')
+    let h = $(e.currentTarget).find('.list').hasClass('hide')
+    $('.sidebar-app-list .list').addClass('hide')
+    if (h) {
+        $(e.currentTarget).find('.list').removeClass('hide')
+        $(e.currentTarget).addClass('selected')
+    } else {
+        $(e.currentTarget).find('.list').addClass('hide')
 
-        }
-
-
-    }))
-    $('#background').fadeOut('fast')
-    $('#background').on('click', (e => {
-        toggle_sidebar();
-    }))
-
-    function toggle_sidebar() {
-        $('.sidebar').toggleClass('hide');
-        $('.index').toggleClass('maximized')
-        $('.sidebar-app-list .list').addClass('hide')
-        $('#background').fadeToggle('fast')
-        $('.sidebar-app-list').removeClass('selected')
     }
 
-    let db_core = document.createElement('script');
-    db_core.src = '/db_cores/' + localStorage.getItem('bdo_core') + '/index.js';
-    document.body.appendChild(db_core);
-    
 
+}))
+$('#background').fadeOut('fast')
+$('#background').on('click', (e => {
+    toggle_sidebar();
+}))
+
+function toggle_sidebar() {
+    $('.sidebar').toggleClass('hide');
+    $('.index').toggleClass('maximized')
+    $('.sidebar-app-list .list').addClass('hide')
+    $('#background').fadeToggle('fast')
+    $('.sidebar-app-list').removeClass('selected')
+}
+</script>
+
+<script src="/db_cores/<?= sql_data('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')['value'] ?>/index.js">
 </script>
 
 <script src="js/OpenModals.js"></script>

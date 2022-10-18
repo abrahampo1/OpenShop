@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$database = "rodages";
+$database = "rodagest";
 $username = "root";
 $password = "";
 // Create connection
