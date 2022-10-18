@@ -1,6 +1,6 @@
 let output = {};
 const KioskBoard = require("kioskboard");
-console.log('hola')
+console.log("hola");
 function create_modal(
   data = [
     { type: "text", tag: "h1", text: "Example" },
@@ -189,7 +189,11 @@ function create_modal(
         $(el).attr(key, value);
       });
     }
+    if (element.id) {
+      el.id = element.id;
+    }
     data.push({ info: element, target: el });
+    console.log(element);
     return el;
   }
 }
