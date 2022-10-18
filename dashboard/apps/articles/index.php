@@ -22,5 +22,6 @@
             $('#sapp').load('/dashboard/apps/' + i[2] + '/pages/' + $(e.currentTarget).attr('data-page') +
                 '/index.php')
         })
+        $('.sidebutton')[0].click()
     })
 </script>

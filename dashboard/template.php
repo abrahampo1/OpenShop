@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="/js/OpenModals.css">
-    <script src="/js/OpenModals.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="/js/classicges.js"></script>
@@ -91,6 +90,20 @@
                 </div>
             </div>
         </div>
+        <div class="sidebar-app-list ">
+            <div class="lcontent">
+                Ajustes
+                <iconify-icon inline icon="akar-icons:chevron-right"></iconify-icon>
+            </div>
+            <div class="list hide fade-in-left">
+                <div class="sidebar-app-btn">
+                    <a class="content" href="settings">
+                        <iconify-icon style="background-color: gray;" inline icon="ci:settings"></iconify-icon> Ajustes de la aplicación
+                    </a>
+                </div>
+
+            </div>
+        </div>
     </div>
     <div id="background"></div>
 </body>
@@ -125,6 +138,11 @@
         $('.sidebar-app-list').removeClass('selected')
     }
 
-    const Clasges = new ClassicGes('http://92.187.198.99', '5000')
-    Clasges.query('select * from clientes')
+    let db_core = document.createElement('script');
+    db_core.src = '/db_cores/' + localStorage.getItem('bdo_core') + '/index.js';
+    document.body.appendChild(db_core);
+    
+
 </script>
+
+<script src="js/OpenModals.js"></script>

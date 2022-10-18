@@ -231,10 +231,50 @@ body {
   bottom: 0;
 }
 
-.w50{
-    width: 50%;
+.w50 {
+  width: 50%;
 }
 
+.card {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-right: 10px;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.card.selected {
+  box-shadow: #005ad9 0px 0px 0px 1px;
+}
+.card.selected h3 {
+  color: #005ad9;
+}
+.card.selected .settings iconify-icon {
+  color: #005ad9;
+}
+.card.selected .settings iconify-icon:hover {
+    color: #0049b0;
+  }
+.card .settings iconify-icon:hover {
+  color: rgb(63, 63, 63);
+}
+
+#loading{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.card .settings {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: gray;
+}
 .w80 {
   position: absolute;
   left: 200px;
@@ -275,6 +315,14 @@ body {
   justify-content: space-between;
 }
 
+.flex.center {
+  align-items: center;
+}
+
+.flex.center input {
+  margin-top: 0px;
+}
+
 input:focus-visible {
   border: none;
   outline: none;
@@ -305,6 +353,9 @@ input {
   padding: 0 16px;
   border-radius: 6px;
   background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: 600;
   text-align: center;

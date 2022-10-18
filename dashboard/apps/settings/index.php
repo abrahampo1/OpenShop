@@ -1,10 +1,7 @@
 <div class="flex">
     <div class="w20">
-        <div class="sidebutton" data-page="directory">
-            Directorio
-        </div>
-        <div class="sidebutton" data-page="iva">
-            IVA
+        <div class="sidebutton" data-page="database">
+            Base de datos
         </div>
     </div>
     <div class="w80" id="sapp"></div>

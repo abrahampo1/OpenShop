@@ -12,25 +12,34 @@ include('../../../../../functions.php');
     </div>
     <button class="button primary">Crear artículo</button>
 </div>
-<table class="table">
+<table class="table" id="articles_table">
     <tr>
         <th class="text-left">Nombre</th>
-        <th>Existencias</th>
         <th class="text-right">Precio</th>
     </tr>
-    <?php
-
-    foreach (sql_array('SELECT * FROM tpv_inventory') as $key => $value) {
-    ?>
-
-        <tr>
-            <td><?= $value['name'] ?></td>
-            <td class="text-center ">-</td>
-            <td class="text-right "><?= number_format($value['precio'], 2) ?> €</td>
-        </tr>
-
-    <?php
-    }
-
-    ?>
 </table>
+<div id="loading">
+    <iconify-icon icon="line-md:loading-twotone-loop" width="128" height="128"></iconify-icon>
+</div>
+
+
+<script>
+    defer(function() {
+        var DATABASE = new DB();
+        DATABASE.articles().then(r => {
+            console.log(r)
+            $('#loading').hide();
+            r.forEach(element => {
+                let tr = document.createElement('tr');
+                var n = document.createElement('td');
+                n.innerText = element.name
+                tr.appendChild(n);
+                var n = document.createElement('td');
+                n.innerText = element.price + ' €'
+                n.classList.add('text-right')
+                tr.appendChild(n);
+                document.getElementById('articles_table').appendChild(tr)
+            });
+        });
+    })
+</script>

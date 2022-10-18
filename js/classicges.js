@@ -1,20 +1,40 @@
 var ClassicGes = class ClassicGes {
   constructor(
-    ip = "http://localhost",
-    port = 5000,
-    path = "C:/clasges6/datos"
+    token = localStorage.getItem("clasges_token"),
+    path = "C:/clasges6activo/datos"
   ) {
     this._events = {};
-    this.query = (sql, limit = 50, p = path) => {
+    this.test = () => {
       return new Promise((resolve, reject) => {
-        console.log(ip + ":" + port + "/sql")
         $.ajax({
           type: "POST",
-          url: ip + ":" + port + "/sql",
+          url: "https://my.rodapro.es/gestpv/api.php",
+          data: {
+            sql: "SELECT * FROM clientes",
+            limit: 1,
+            path: path,
+            token: token,
+          },
+          success: function (response) {
+            if (response.success == false) {
+              reject(false);
+            } else {
+              resolve(true);
+            }
+          },
+        });
+      });
+    };
+    this.query = (sql, limit = 50, p = path) => {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          type: "POST",
+          url: "https://my.rodapro.es/gestpv/api.php",
           data: {
             sql: sql,
             limit: limit,
             path: p,
+            token: token,
           },
           success: function (response) {
             if (JSON.parse(response.message).Table == undefined) {
