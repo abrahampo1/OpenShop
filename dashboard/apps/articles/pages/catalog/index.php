@@ -19,7 +19,7 @@ include('../../../../../functions.php');
     </tr>
 </table>
 <div id="loading">
-    <iconify-icon icon="line-md:loading-twotone-loop" width="128" height="128"></iconify-icon>
+    <iconify-icon icon="eos-icons:loading" width="128" height="128"></iconify-icon>
 </div>
 
 

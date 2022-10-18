@@ -16,18 +16,28 @@ include('../../../../../functions.php');
         <th class="text-left">Nombre</th>
         <th class="text-right">Porcentaje</th>
     </tr>
-    <?php
 
-    foreach (sql_array('SELECT * FROM ivas') as $key => $value) {
-    ?>
-
-        <tr>
-            <td><?= $value['nombre'] ?></td>
-            <td class="text-right "><?= $value['porcentaje']?>%</td>
-        </tr>
-
-    <?php
-    }
-
-    ?>
 </table>
+<div id="loading">
+    <iconify-icon icon="eos-icons:loading" width="128" height="128"></iconify-icon>
+</div>
+<script>
+    defer(function() {
+        var DATABASE = new DB();
+        DATABASE.taxes().then(r => {
+            console.log(r)
+            $('#loading').hide();
+            r.forEach(element => {
+                let tr = document.createElement('tr');
+                var n = document.createElement('td');
+                n.innerText = element.name
+                tr.appendChild(n);
+                var n = document.createElement('td');
+                n.innerText = element.porcentaje + ' %'
+                n.classList.add('text-right')
+                tr.appendChild(n);
+                $('table').append(tr)
+            });
+        });
+    })
+</script>

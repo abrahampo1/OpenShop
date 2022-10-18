@@ -10,7 +10,7 @@ include('../../../../../functions.php');
         <input type="text" class="input--icon" placeholder="Buscar" style="width: 100%;">
         <iconify-icon class="icon--input" inline icon="ant-design:search-outlined"></iconify-icon>
     </div>
-    <div>
+    <div class="flex">
         <button class="button  tertiary">Exportar clientes</button>
         <button class="button secondary">Crear cliente</button>
     </div>
