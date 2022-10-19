@@ -38,5 +38,16 @@ var DB = class DB {
           });
         });
       });
+    this.clients = function (limit = 50, page = 1, filters = {}) {
+      let token = localStorage.getItem("clasges_token");
+      return new Promise((resolve, reject) => {
+        const Clasges = new ClassicGes(token);
+        Clasges.query(
+          "SELECT clacli as id, nombre as name, Email as email, telefono as phone FROM clientes"
+        ).then((r) => {
+          resolve(r);
+        });
+      });
+    };
   }
 };

@@ -256,17 +256,17 @@ body {
   color: #005ad9;
 }
 .card.selected .settings iconify-icon:hover {
-    color: #0049b0;
-  }
+  color: #0049b0;
+}
 .card .settings iconify-icon:hover {
   color: rgb(63, 63, 63);
 }
 
-#loading{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .card .settings {
@@ -345,14 +345,17 @@ input {
   outline: none;
 }
 
+.hsep {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
 .button {
   position: relative;
   display: inline-block;
   height: 48px;
   min-width: 80px;
   padding: 0 16px;
-  margin-left: 5px;
-  margin-right: 5px;
   border-radius: 6px;
   background-color: #fff;
   display: flex;
@@ -458,6 +461,11 @@ input {
 
 tr {
   border-bottom: 1px #f2f2f2 solid;
+  cursor: default;
+}
+
+tr:hover{
+  background-color: #e6f0ff;
 }
 
 td {

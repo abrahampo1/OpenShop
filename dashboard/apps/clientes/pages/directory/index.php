@@ -12,28 +12,41 @@ include('../../../../../functions.php');
     </div>
     <div class="flex">
         <button class="button  tertiary">Exportar clientes</button>
+        <div class="hsep"></div>
         <button class="button secondary">Crear cliente</button>
     </div>
 </div>
-<table class="table">
+<table class="table" id="clients_table">
     <tr>
         <th class="text-center ">Nombre</th>
         <th class="text-center ">Correo Electrónico</th>
         <th class="text-center ">Telefono</th>
     </tr>
-    <?php
-
-    foreach (sql_array('SELECT * FROM clientes') as $key => $value) {
-    ?>
-
-        <tr>
-            <td class="text-center "><?= $value['nombre'] ?></td>
-            <td class="text-center "><?= $value['email'] ?></td>
-            <td class="text-center "><?= $value['telefono'] ?></td>
-        </tr>
-
-    <?php
-    }
-
-    ?>
 </table>
+<div id="loading">
+    <iconify-icon icon="eos-icons:loading" width="128" height="128"></iconify-icon>
+</div>
+<script>
+    defer(function() {
+        var DATABASE = new DB();
+        DATABASE.clients().then(r => {
+            console.log(r)
+            $('#loading').hide();
+            r.forEach(element => {
+                let tr = document.createElement('tr');
+                var n = document.createElement('td');
+                n.innerText = element.name
+                tr.appendChild(n);
+                var n = document.createElement('td');
+                n.innerText = element.email 
+                n.classList.add('text-left')
+                tr.appendChild(n);
+                var n = document.createElement('td');
+                n.innerText = element.phone 
+                n.classList.add('text-right')
+                tr.appendChild(n);
+                document.getElementById('clients_table').appendChild(tr)
+            });
+        });
+    })
+</script>
