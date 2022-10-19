@@ -25,6 +25,25 @@ switch (post('resource', true)) {
 
         echo json_encode(sql_array("SELECT id, $column FROM $table"));
         break;
+    case 'get_settings':
+        $name = post('name', true);
+        echo json_encode(sql_data("SELECT * FROM rg_settings WHERE name = '$name'"));
+        break;    
+    case 'settings':
+        $name = post('name', true);
+        $value = post('value', true);
+        include 'database.php';
+        if(existe('SELECT * FROM rg_settings WHERE name = "'. $name .'"')){
+            mysqli_query($link, "UPDATE `rg_settings` SET `value` = '$value ' WHERE `rg_settings`.`name` ='$name';");
+
+        }else{
+            mysqli_query($link, "INSERT INTO `rg_settings` (`id`, `name`, `value`) VALUES (NULL, '$name', '$value');");
+
+        }
+        success('Dato actualizado');
+
+        break;
+    
     default:
         # code...
         break;

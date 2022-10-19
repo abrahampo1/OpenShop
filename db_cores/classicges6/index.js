@@ -1,8 +1,22 @@
 var DB = class DB {
   constructor() {
     this._events = {};
+    $.ajax({
+      type: "POST",
+      url: "/api.php",
+      data: {
+        resource: "get_settings",
+        name: "RGDB_CLASSGES6_TOKEN",
+      },
+      success: function (response) {
+        localStorage.setItem(
+          "RGDB_CLASSGES6_TOKEN",
+          JSON.parse(response).value
+        );
+      },
+    });
+    let token = localStorage.getItem("RGDB_CLASSGES6_TOKEN");
     (this.taxes = function () {
-      let token = localStorage.getItem("clasges_token");
       return new Promise((resolve, reject) => {
         const Clasges = new ClassicGes(token);
         Clasges.query("SELECT * FROM iva", 1).then((r) => {
@@ -28,7 +42,6 @@ var DB = class DB {
       });
     }),
       (this.articles = function (limit = 50, page = 1, filters = {}) {
-        let token = localStorage.getItem("clasges_token");
         return new Promise((resolve, reject) => {
           const Clasges = new ClassicGes(token);
           Clasges.query(
