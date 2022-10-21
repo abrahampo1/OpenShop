@@ -16,6 +16,26 @@ var DB = class DB {
       },
     });
     let token = localStorage.getItem("RGDB_CLASSGES6_TOKEN");
+    this.invoices = function (limit = 50, page = 1, filters = {}) {
+      return new Promise((resolve, reject) => {
+        const Clasges = new ClassicGes(token);
+        Clasges.query(
+          "SELECT Clafac as id, Nomcli as client, Fecha as date, Referencia as title, Importe as total FROM factura"
+        ).then((r) => {
+          resolve(r);
+        });
+      });
+    };
+    this.budgets = function (limit = 50, page = 1, filters = {}) {
+      return new Promise((resolve, reject) => {
+        const Clasges = new ClassicGes(token);
+        Clasges.query(
+          "SELECT Clapre as id, Nomcli as client, Fecha as date, Referencia as title, Importe as total FROM presup"
+        ).then((r) => {
+          resolve(r);
+        });
+      });
+    };
     (this.taxes = function () {
       return new Promise((resolve, reject) => {
         const Clasges = new ClassicGes(token);

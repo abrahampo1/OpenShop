@@ -2,6 +2,7 @@
 include '../router.php';
 
 ?>
+
 <script src="/js/main.js"></script>
 <script>
     function defer(method) {
@@ -14,30 +15,35 @@ include '../router.php';
         }
     }
 </script>
+
+
+
 <?php
 
 Route::add("/dashboard/", function () {
-include '../functions.php';
+    include '../functions.php';
 
 ?><div id="app" class="index"><?php
-                                    include 'views/home/index.php';
-                                    ?></div>
+                                include 'views/home/index.php';
+                                ?></div>
     <script>
         defer(function() {
             $('#background').addClass('hide');
 
         })
-    </script><?php
-            });
-            $app_data = false;
-            Route::add('/dashboard/([a-z-0-9-]*)', function ($var1) {
-                include '../functions.php';
-                $dir = 'apps';
-                if (file_exists($dir . '/' . $var1 . '/index.php')) {
-                    if (file_exists($dir . '/' . $var1 . '/manifest.json')) {
-                        $app_data = json_decode(file_get_contents($dir . '/' . $var1 . '/manifest.json'), true);
+    </script>
 
-                ?>
+    <?php
+});
+$app_data = false;
+Route::add('/dashboard/([a-z-0-9-]*)', function ($var1) {
+    include '../functions.php';
+    $dir = 'apps';
+    if (file_exists($dir . '/' . $var1 . '/index.php')) {
+        if (file_exists($dir . '/' . $var1 . '/manifest.json')) {
+            $app_data = json_decode(file_get_contents($dir . '/' . $var1 . '/manifest.json'), true);
+
+    ?>
 
             <script>
                 defer(function() {
@@ -46,15 +52,25 @@ include '../functions.php';
                 })
             </script>
 
+
         <?php
 
-                    }
+        }
         ?><div id="app" class="maximized beingapp"><?php
                                                     include $dir . '/' . $var1 . '/index.php';
                                                     ?></div><?php
-                }
-            });
+                                                        }
+                                                    });
+                                                    Route::run('/');
 
-            Route::run('/');
 
-            include 'template.php';
+                                                            ?>
+
+
+<?php
+
+
+include 'template.php';
+
+
+?>

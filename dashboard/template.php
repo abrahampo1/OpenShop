@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="/js/OpenModals.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <?php
+
+    if (existe('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')) {
+        $val  = sql_data('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')['value'];
+        echo '<script src="/db_cores/' . $val . '/index.js"></script>';
+    }
+
+    ?>
     <script src="/js/classicges.js"></script>
     <title>OpenDashboard</title>
 </head>
@@ -117,35 +125,34 @@
 </html>
 
 <script>
-$('.sidebar-app-list').on('click', (e => {
-    $('.sidebar-app-list').removeClass('selected')
-    let h = $(e.currentTarget).find('.list').hasClass('hide')
-    $('.sidebar-app-list .list').addClass('hide')
-    if (h) {
-        $(e.currentTarget).find('.list').removeClass('hide')
-        $(e.currentTarget).addClass('selected')
-    } else {
-        $(e.currentTarget).find('.list').addClass('hide')
+    $('.sidebar-app-list').on('click', (e => {
+        $('.sidebar-app-list').removeClass('selected')
+        let h = $(e.currentTarget).find('.list').hasClass('hide')
+        $('.sidebar-app-list .list').addClass('hide')
+        if (h) {
+            $(e.currentTarget).find('.list').removeClass('hide')
+            $(e.currentTarget).addClass('selected')
+        } else {
+            $(e.currentTarget).find('.list').addClass('hide')
 
+        }
+
+
+    }))
+    $('#background').fadeOut('fast')
+    $('#background').on('click', (e => {
+        toggle_sidebar();
+    }))
+
+    function toggle_sidebar() {
+        $('.sidebar').toggleClass('hide');
+        $('.index').toggleClass('maximized')
+        $('.sidebar-app-list .list').addClass('hide')
+        $('#background').fadeToggle('fast')
+        $('.sidebar-app-list').removeClass('selected')
     }
-
-
-}))
-$('#background').fadeOut('fast')
-$('#background').on('click', (e => {
-    toggle_sidebar();
-}))
-
-function toggle_sidebar() {
-    $('.sidebar').toggleClass('hide');
-    $('.index').toggleClass('maximized')
-    $('.sidebar-app-list .list').addClass('hide')
-    $('#background').fadeToggle('fast')
-    $('.sidebar-app-list').removeClass('selected')
-}
 </script>
 
-<script src="/db_cores/<?= sql_data('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')['value'] ?>/index.js">
-</script>
+
 
 <script src="js/OpenModals.js"></script>
