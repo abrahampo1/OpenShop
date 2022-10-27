@@ -26,6 +26,39 @@ var DB = class DB {
         });
       });
     };
+    this.bussiness = function (limit = 50, page = 1, filters = {}) {
+      return new Promise((resolve, reject) => {
+        const Clasges = new ClassicGes(token);
+        Clasges.query(
+          "SELECT Claemp as id, Nomemp as name, Nifemp as nif FROM empresas"
+        ).then((r) => {
+          resolve(r);
+        });
+      });
+    };
+    this.exercises = function (limit = 50, page = 1, filters = {}) {
+      return new Promise((resolve, reject) => {
+        const Clasges = new ClassicGes(token);
+        Clasges.query(
+          "SELECT Claeje as id, Nomeje as name FROM Ejercic ORDER BY 1 DESC"
+        ).then((r) => {
+          resolve(r);
+        });
+      });
+    };
+
+    this.create_invoice = function () {
+      create_modal([
+        {
+          type: "text",
+          tag: "h1",
+          text: "Crear Factura",
+        },
+        {
+          type: "search",
+        },
+      ]);
+    };
     this.budgets = function (limit = 50, page = 1, filters = {}) {
       return new Promise((resolve, reject) => {
         const Clasges = new ClassicGes(token);

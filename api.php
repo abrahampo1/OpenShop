@@ -2,6 +2,7 @@
 
 
 include 'functions.php';
+include 'structure.php';
 
 switch (post('resource', true)) {
     case 'itemData':
@@ -10,14 +11,17 @@ switch (post('resource', true)) {
         break;
     case 'SelectFromTable':
         $table = post('table');
+        $table_data = $DBS[$table];
+        var_dump($table_data);
+        $table_name = $table_data['table'];
         $columns = post('columns');
         $cols = '';
         foreach ($columns as $value) {
-            $cols .= $value . ',';
+            $cols .= $table_data['columns'][$value] . ' as ' .  $value . ',';
         }
 
         $cols = substr($cols, 0, -1);
-        echo json_encode(sql_array("SELECT id, $cols FROM $table"));
+        echo "SELECT $cols FROM $table_name";
         break;
     case 'obtener_tabla':
         $table = post('tabla');
@@ -28,22 +32,20 @@ switch (post('resource', true)) {
     case 'get_settings':
         $name = post('name', true);
         echo json_encode(sql_data("SELECT * FROM rg_settings WHERE name = '$name'"));
-        break;    
+        break;
     case 'settings':
         $name = post('name', true);
         $value = post('value', true);
         include 'database.php';
-        if(existe('SELECT * FROM rg_settings WHERE name = "'. $name .'"')){
+        if (existe('SELECT * FROM rg_settings WHERE name = "' . $name . '"')) {
             mysqli_query($link, "UPDATE `rg_settings` SET `value` = '$value ' WHERE `rg_settings`.`name` ='$name';");
-
-        }else{
+        } else {
             mysqli_query($link, "INSERT INTO `rg_settings` (`id`, `name`, `value`) VALUES (NULL, '$name', '$value');");
-
         }
         success('Dato actualizado');
 
         break;
-    
+
     default:
         # code...
         break;

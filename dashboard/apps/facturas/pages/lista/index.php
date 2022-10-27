@@ -8,9 +8,6 @@ include('../../../../../functions.php');
         <input type="text" class="input--icon" placeholder="Buscar" style="width: 100%;">
         <iconify-icon class="icon--input" inline icon="ant-design:search-outlined"></iconify-icon>
     </div>
-    <div class="flex">
-        <button class="button primary">Crear Factura</button>
-    </div>
 </div>
 <table class="table" id="clients_table">
     <tr>
@@ -25,7 +22,11 @@ include('../../../../../functions.php');
 </div>
 <script>
     defer(function() {
-        var DATABASE = new DB();
+        api({
+            resource: "SelectFromTable",
+            table: 'invoices',
+            columns: ['id', 'client']
+        })
         DATABASE.invoices().then(r => {
             console.log(r)
             $('#loading').hide();

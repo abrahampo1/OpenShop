@@ -3,6 +3,12 @@
         <div class="sidebutton" data-page="lista">
             Listado de Facturas
         </div>
+        <div class="sidebutton" data-page="crear">
+            Crear Factura
+        </div>
+        <div class="sidebutton" data-page="ajustes">
+            Ajustes de Facturas
+        </div>
     </div>
     <div class="w80" id="sapp"></div>
 </div>

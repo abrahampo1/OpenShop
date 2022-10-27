@@ -3,6 +3,8 @@
 include('../../../../../functions.php');
 
 ?>
+
+
 <div class="flex">
     <div class="input ">
         <input type="text" class="input--icon" placeholder="Buscar" style="width: 100%;">
