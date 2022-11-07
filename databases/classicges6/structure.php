@@ -18,7 +18,7 @@ $DBS['invoices'] = [
         'date' => 'fecha',
         'reference' => 'referencia',
         'total' => 'importe'
-        ]
+    ]
 ];
 
 
@@ -28,8 +28,9 @@ $DBS['articles'] = [
     'columns' => [
         'id' => 'claart',
         'name' => 'nombre',
-        'price' => 'Pvp1'
-        ]
+        'price' => 'Pvp1',
+        'hasvariant' => 'tyc'
+    ]
 ];
 
 //CLIENTES
@@ -38,5 +39,50 @@ $DBS['clients'] = [
     'columns' => [
         'id' => 'clacli',
         'name' => 'nombre'
-        ]
+    ]
+];
+
+
+//EMPRESAS
+
+$DBS['bussiness'] = [
+    'table' => 'Empresas',
+    'columns' => [
+        'id' => 'Claemp',
+        'name' => 'Nomemp'
+    ]
+];
+
+
+//EJERCICIO
+
+$DBS['campaign'] = [
+    'table' => 'Ejercic',
+    'columns' => [
+        'id' => 'Claeje',
+        'name' => 'Nomeje'
+    ]
+];
+
+
+//COLORES 
+
+$DBS['colors'] = [
+    'table' => 'Colores',
+    'columns' => [
+        'id' => 'Clacol',
+        'color' => 'Color',
+        'article' => 'Claart'
+    ]
+];
+
+
+//TAJAJES
+
+$DBS['sizes'] = [
+    'table' => 'Tallajes',
+    'columns' => [
+        'id' => 'Clatal',
+        'name' => 'Nomtal',
+    ]
 ];

@@ -9,38 +9,38 @@ include('../../../../../functions.php');
 <div class="w100">
     <div class="flex">
         <h3 class="w30">Empresa</h3>
-        <select name="" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%" id="bussiness">
-            <option value="">example</option>
+        <select onchange="settings('RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS', this.value)" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%" id="bussiness">
+    <option value="">-= Seleccione =-</option>
+            <?php
+            $def = sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS"');
+            if ($def) {
+                $def = $def->value;
+            }
+            foreach (sql_array('bussiness', ['id', 'name']) as $key => $value) {
+            ?>
+                <option <?= ($def == $value['id']) ? 'selected' : '' ?> value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+            <?php
+            }
+
+            ?>
         </select>
     </div>
     <br>
     <div class="flex">
         <h3 class="w30">Ejercicio</h3>
-        <select name="" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%" id="exercise">
-            <option value="">example</option>
+        <select name="" onchange="settings('RGDB_CLASSGES6_INVOICE_DEFAULT_CAMPAIGN', this.value)" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%">
+            <?php
+            $def = sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_INVOICE_DEFAULT_CAMPAIGN"');
+            if ($def) {
+                $def = $def->value;
+            }
+            foreach (sql_array('campaign', ['id', 'name']) as $key => $value) {
+            ?>
+                <option <?= ($def == $value['id']) ? 'selected' : '' ?> value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+            <?php
+            }
+
+            ?>
         </select>
     </div>
 </div>
-<script>
-    defer(function() {
-        var DATABASE = new DB();
-        DATABASE.bussiness().then(r => {
-            document.getElementById('bussiness').innerHTML = ''
-            r.forEach(element => {
-                let opt = document.createElement('option')
-                opt.value = element.id
-                opt.innerText = element.name
-                document.getElementById('bussiness').appendChild(opt)
-            });
-        })
-        DATABASE.exercises().then(r => {
-            document.getElementById('exercise').innerHTML = ''
-            r.forEach(element => {
-                let opt = document.createElement('option')
-                opt.value = element.id
-                opt.innerText = element.name
-                document.getElementById('exercise').appendChild(opt)
-            });
-        })
-    })
-</script>

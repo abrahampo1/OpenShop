@@ -50,6 +50,12 @@ switch (post('resource', true)) {
         $value = post('value', true);
         echo json_encode(sql_array($table, $column, [$column[1]], $value));
         break;
+    case 'search_table_id':
+        $column = post('column', true);
+        $table = post('table', true);
+        $value = post('value', true);
+        echo json_encode(sql_by_id($table, $column, $value));
+        break;
     default:
         # code...
         break;

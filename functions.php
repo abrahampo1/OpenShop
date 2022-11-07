@@ -54,25 +54,43 @@ function error($text)
 
 function sql_array($table, $columns = [], $search_cols = null, $search_value = null)
 {
-    include 'databases/classicges6/function.php';
+    include_once 'databases/classicges6/function.php';
     include 'databases/classicges6/structure.php';
     $cols = '';
     $table_data = $DBS[$table];
-        $table_name = $table_data['table'];
-        foreach ($columns as $value) {
-            $cols .= $table_data['columns'][$value] . ' as ' .  $value . ',';
-        }
+    $table_name = $table_data['table'];
+    foreach ($columns as $value) {
+        $cols .= $table_data['columns'][$value] . ' as ' .  $value . ',';
+    }
 
-        $cols = substr($cols, 0, -1);
-    
-        $search = '';
-        if($search_cols && $search_value){
-            $search = ' WHERE ';
-            foreach ($search_cols as $value) {
-                $search .= 'LOWER('. $table_data['columns'][$value] . ') LIKE LOWER("%' .  $search_value . '%") OR ';
-            }
+    $cols = substr($cols, 0, -1);
+
+    $search = '';
+    if ($search_cols && $search_value) {
+        $search = ' WHERE ';
+        foreach ($search_cols as $value) {
+            $search .= 'LOWER(' . $table_data['columns'][$value] . ') LIKE LOWER("%' .  $search_value . '%") OR ';
         }
-        $search = substr($search, 0, -3);
+    }
+    $search = substr($search, 0, -3);
+
+    return send_query("SELECT $cols FROM $table_name $search");
+}
+
+function sql_by_id($table, $columns, $id)
+{
+    include_once 'databases/classicges6/function.php';
+    include 'databases/classicges6/structure.php';
+    $cols = '';
+    $table_data = $DBS[$table];
+    $table_name = $table_data['table'];
+    foreach ($columns as $value) {
+        $cols .= $table_data['columns'][$value] . ' as ' .  $value . ',';
+    }
+
+    $cols = substr($cols, 0, -1);
+
+    $search = ' WHERE ' . $table_data['columns']['id'] . ' = ' . $id;
 
     return send_query("SELECT $cols FROM $table_name $search");
 }

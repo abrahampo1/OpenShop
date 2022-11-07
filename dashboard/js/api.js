@@ -25,14 +25,13 @@ function search(table, column, input) {
         var rect = input.getBoundingClientRect();
         console.log(rect);
         search_holder.style.width = rect.width - 2;
-        search_holder.style.top = rect.top + search_holder.offsetHeight + 16;
+        search_holder.style.top = rect.top + rect.height;
         search_holder.style.left = rect.left;
         window.onresize = function () {
           search_holder.style.width = rect.width - 2;
-          search_holder.style.top = rect.top + search_holder.offsetHeight + 16;
+          search_holder.style.top = rect.top + rect.height;
           search_holder.style.left = rect.left;
         };
-
         input.onblur = function () {
           setTimeout(() => {
             search_holder.innerHTML = "";
@@ -41,5 +40,19 @@ function search(table, column, input) {
         };
       }
     });
+  });
+}
+
+function settings(name, value) {
+  $.ajax({
+    type: "POST",
+    url: "/api.php",
+    data: {
+      resource: "settings",
+      name: name,
+      value: value,
+    },
+    dataType: "dataType",
+    success: function (response) {},
   });
 }
