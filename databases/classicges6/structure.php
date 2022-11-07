@@ -44,7 +44,6 @@ $DBS['clients'] = [
 
 
 //EMPRESAS
-
 $DBS['bussiness'] = [
     'table' => 'Empresas',
     'columns' => [
@@ -55,7 +54,6 @@ $DBS['bussiness'] = [
 
 
 //EJERCICIO
-
 $DBS['campaign'] = [
     'table' => 'Ejercic',
     'columns' => [
@@ -66,7 +64,6 @@ $DBS['campaign'] = [
 
 
 //COLORES 
-
 $DBS['colors'] = [
     'table' => 'Colores',
     'columns' => [
@@ -78,7 +75,6 @@ $DBS['colors'] = [
 
 
 //TAJAJES
-
 $DBS['sizes'] = [
     'table' => 'Tallajes',
     'columns' => [
