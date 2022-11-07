@@ -52,24 +52,38 @@ function error($text)
     exit();
 }
 
-function sql_array($sql)
+function sql_array($table, $columns = [], $search_cols = null, $search_value = null)
 {
-    include 'database.php';
-    $do = mysqli_query($link, $sql);
-    if (!$do) {
-        error('Error en la base de datos \n' . mysqli_error($link));
-    }
-    $res = [];
-    while ($row = mysqli_fetch_assoc($do)) {
-        $res[] = $row;
-    }
-    return $res;
+    include 'databases/classicges6/function.php';
+    include 'databases/classicges6/structure.php';
+    $cols = '';
+    $table_data = $DBS[$table];
+        $table_name = $table_data['table'];
+        foreach ($columns as $value) {
+            $cols .= $table_data['columns'][$value] . ' as ' .  $value . ',';
+        }
+
+        $cols = substr($cols, 0, -1);
+    
+        $search = '';
+        if($search_cols && $search_value){
+            $search = ' WHERE ';
+            foreach ($search_cols as $value) {
+                $search .= 'LOWER('. $table_data['columns'][$value] . ') LIKE LOWER("%' .  $search_value . '%") OR ';
+            }
+        }
+        $search = substr($search, 0, -3);
+
+    return send_query("SELECT $cols FROM $table_name $search");
 }
 
 function sql_data($sql)
 {
-    if (isset(sql_array($sql)[0])) {
-        return sql_array($sql)[0];
+    include 'database.php';
+    if (existe($sql)) {
+        $l = mysqli_query($link, $sql);
+        $row = mysqli_fetch_object($l);
+        return $row;
     } else {
         return false;
     }

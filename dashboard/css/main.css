@@ -101,26 +101,31 @@ body {
   color: gray;
   font-weight: 900;
 }
+
 .button.secondary {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   line-height: 48px;
   color: #005ad9;
 }
+
 .button.secondary:hover {
   background: #e6f0ff;
   color: #005ad9;
 }
+
 .button.tertiary {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   line-height: 48px;
   color: rgba(0, 0, 0, 0.55);
 }
+
 .button.tertiary:hover {
   background: #e6f0ff;
   color: rgba(0, 0, 0, 0.55);
 }
+
 .sidebar-app-btn .content iconify-icon {
   margin-right: 10px;
   background-color: rgb(2, 210, 210);
@@ -231,12 +236,20 @@ body {
   bottom: 0;
 }
 
+.w30 {
+  width: 30%;
+}
+
 .w50 {
   width: 50%;
 }
 
-.w70{
-  width: 70%  ;
+.w70 {
+  width: 70%;
+}
+
+.w100 {
+  width: 100%;
 }
 
 .card {
@@ -253,15 +266,19 @@ body {
 .card.selected {
   box-shadow: #005ad9 0px 0px 0px 1px;
 }
+
 .card.selected h3 {
   color: #005ad9;
 }
+
 .card.selected .settings iconify-icon {
   color: #005ad9;
 }
+
 .card.selected .settings iconify-icon:hover {
   color: #0049b0;
 }
+
 .card .settings iconify-icon:hover {
   color: rgb(63, 63, 63);
 }
@@ -279,6 +296,7 @@ body {
   top: 10px;
   color: gray;
 }
+
 .w80 {
   position: absolute;
   left: 200px;
@@ -327,12 +345,8 @@ body {
   margin-top: 0px;
 }
 
-input:focus-visible {
-  border: none;
-  outline: none;
-}
 
-input {
+input, select {
   background: none;
   border: none;
   height: 48px;
@@ -342,6 +356,32 @@ input {
   color: #1a1a1a;
   border-radius: 4px;
   padding: 0 10px;
+}
+
+
+search {
+  position: absolute;
+  border-radius: 2px 2px 4px 4px;
+  border: 1px solid #b3b3b3;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+searchitem {
+  width: 100%;
+  height: 30px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+searchitem:hover {
+  background-color: #e6f0ff;
+  color: #006aff;
 }
 
 .input:focus {
@@ -406,12 +446,17 @@ input {
   position: relative;
 }
 
-.input .input--icon:focus + .icon--input {
+.input .input--icon:focus+.icon--input {
   color: #005ad9;
 }
 
 .input--icon:focus {
   border: 1px solid #005ad9 !important;
+}
+
+input.success {
+  border: 1px solid #005ad9 !important;
+  color: #005ad9;
 }
 
 .icon--input {
@@ -468,7 +513,7 @@ tr {
   cursor: default;
 }
 
-tr:hover{
+tr:hover {
   background-color: #e6f0ff;
 }
 

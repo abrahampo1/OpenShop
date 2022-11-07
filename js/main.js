@@ -404,3 +404,5 @@ function CartItem(id) {
 setTimeout(() => {
   LoadCart();
 }, 100);
+
+

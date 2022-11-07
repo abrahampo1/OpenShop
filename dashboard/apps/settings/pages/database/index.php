@@ -83,7 +83,7 @@ function configure_ges() {
             placeholder: 'ASDWGDSFSD...',
             name: 'token',
             id: 'clasgestoken',
-            value: "<?= (existe('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_TOKEN"'))?sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_TOKEN"')['value']:'' ?>",
+            value: "<?= (existe('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_TOKEN"'))?sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_TOKEN"')->value:'' ?>",
             classList: ['w50']
         }]
     }, {

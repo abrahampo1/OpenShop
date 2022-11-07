@@ -5,15 +5,15 @@ include '../router.php';
 
 <script src="/js/main.js"></script>
 <script>
-    function defer(method) {
-        if (window.jQuery) {
-            method();
-        } else {
-            setTimeout(function() {
-                defer(method)
-            }, 50);
-        }
+function defer(method) {
+    if (window.jQuery) {
+        method();
+    } else {
+        setTimeout(function() {
+            defer(method)
+        }, 50);
     }
+}
 </script>
 
 
@@ -26,14 +26,14 @@ Route::add("/dashboard/", function () {
 ?><div id="app" class="index"><?php
                                 include 'views/home/index.php';
                                 ?></div>
-    <script>
-        defer(function() {
-            $('#background').addClass('hide');
+<script>
+defer(function() {
+    $('#background').addClass('hide');
 
-        })
-    </script>
+})
+</script>
 
-    <?php
+<?php
 });
 $app_data = false;
 Route::add('/dashboard/([a-z-0-9-]*)', function ($var1) {
@@ -45,15 +45,15 @@ Route::add('/dashboard/([a-z-0-9-]*)', function ($var1) {
 
     ?>
 
-            <script>
-                defer(function() {
-                    $('#current_app').html('<?= $app_data['name'] ?>')
-                    $('.sidebar').addClass('hide')
-                })
-            </script>
+<script>
+defer(function() {
+    $('#current_app').html('<?= $app_data['name'] ?>')
+    $('.sidebar').addClass('hide')
+})
+</script>
 
 
-        <?php
+<?php
 
         }
         ?><div id="app" class="maximized beingapp"><?php

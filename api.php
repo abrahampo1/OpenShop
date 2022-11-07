@@ -2,7 +2,6 @@
 
 
 include 'functions.php';
-include 'structure.php';
 
 switch (post('resource', true)) {
     case 'itemData':
@@ -27,7 +26,7 @@ switch (post('resource', true)) {
         $table = post('tabla');
         $column = post('columna');
 
-        echo json_encode(sql_array("SELECT id, $column FROM $table"));
+        //echo json_encode(sql_array("SELECT id, $column FROM $table"));
         break;
     case 'get_settings':
         $name = post('name', true);
@@ -45,7 +44,12 @@ switch (post('resource', true)) {
         success('Dato actualizado');
 
         break;
-
+    case 'search_table':
+        $column = post('column', true);
+        $table = post('table', true);
+        $value = post('value', true);
+        echo json_encode(sql_array($table, $column, [$column[1]], $value));
+        break;
     default:
         # code...
         break;

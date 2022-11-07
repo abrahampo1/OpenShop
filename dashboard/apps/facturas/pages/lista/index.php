@@ -5,7 +5,8 @@ include('../../../../../functions.php');
 ?>
 <div class="flex">
     <div class="input ">
-        <input type="text" class="input--icon" placeholder="Buscar" style="width: 100%;">
+        <input type="text" onchange="$('#sapp').load(localStorage.getItem('current_page')+'?search=' + this.value)"
+            class="input--icon" placeholder="Buscar" style="width: 100%;">
         <iconify-icon class="icon--input" inline icon="ant-design:search-outlined"></iconify-icon>
     </div>
 </div>
@@ -16,41 +17,43 @@ include('../../../../../functions.php');
         <th class="text-center ">Titulo</th>
         <th class="text-right ">Importe</th>
     </tr>
+    <?php
+
+    $arr = sql_array('invoices', ['id', 'client', 'date', 'reference', 'total'], ['reference'], get('search'));
+
+
+
+    if($arr){
+
+    foreach ($arr as $value){
+        ?>
+
+    <tr>
+        <td class="text-left"><?= date('d-m-Y', strtotime($value['date']))  ?></td>
+        <td class="text-left"><?= $value['client'] ?></td>
+        <td class="text-left"><?= $value['reference'] ?></td>
+        <td class="text-right"><?= $value['total'] ?> €</td>
+    </tr>
+
+    <?php
+    }
+}
+    
+    ?>
 </table>
-<div id="loading">
-    <iconify-icon icon="eos-icons:loading" width="128" height="128"></iconify-icon>
-</div>
-<script>
-    defer(function() {
-        api({
-            resource: "SelectFromTable",
-            table: 'invoices',
-            columns: ['id', 'client']
-        })
-        DATABASE.invoices().then(r => {
-            console.log(r)
-            $('#loading').hide();
-            r.forEach(element => {
-                let tr = document.createElement('tr');
-                var n = document.createElement('td');
-                let d = new Date(element.date)
-                n.innerText = d.toLocaleDateString()
-                n.classList.add('text-left')
-                tr.appendChild(n);
-                var n = document.createElement('td');
-                n.innerText = element.client
-                n.classList.add('text-center')
-                tr.appendChild(n);
-                var n = document.createElement('td');
-                n.innerText = element.title
-                n.classList.add('text-center')
-                tr.appendChild(n);
-                var n = document.createElement('td');
-                n.innerText = parseFloat(element.total).toFixed(2) + ' €'
-                n.classList.add('text-right')
-                tr.appendChild(n);
-                document.getElementById('clients_table').appendChild(tr)
-            });
-        });
-    })
-</script>
+<?php
+    
+
+    if(!$arr){
+        ?>
+<p style="text-align: center;">
+    <iconify-icon inline icon="akar-icons:circle-alert"></iconify-icon>
+    No se han encontrado registros con estos filtros
+    <a href="#" onclick="$('#sapp').load(localStorage.getItem('current_page'))">
+        <iconify-icon inline icon="fluent-mdl2:cancel"></iconify-icon> Eliminar filtros
+    </a>
+</p>
+<?php
+    }
+    
+    ?>
