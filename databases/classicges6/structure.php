@@ -74,7 +74,7 @@ $DBS['colors'] = [
 ];
 
 
-//TAJAJES
+//TALLAJES
 $DBS['sizes'] = [
     'table' => 'Tallajes',
     'columns' => [
