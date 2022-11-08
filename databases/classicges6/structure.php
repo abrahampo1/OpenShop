@@ -11,13 +11,21 @@ $DBS = array();
 
 //FACTURAS
 $DBS['invoices'] = [
+    'create' => function ($clientID, $reference, $total) {
+        $bussinesID = sql_data("SELECT value FROM rg_settings WHERE name = 'RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS'")['value'];
+        $campaignID = sql_data("SELECT value FROM rg_settings WHERE name = 'RGDB_CLASSGES6_INVOICE_DEFAULT_CAMPAIGN'")['value'];
+        $sql = "";
+    },
     'table' => 'factura',
     'columns' => [
         'id' => 'clafac',
         'client' => 'nomcli',
+        'clientID' => 'clacli',
         'date' => 'fecha',
         'reference' => 'referencia',
-        'total' => 'importe'
+        'total' => 'importe',
+        'bussiness' => 'claemp',
+        'campaign' => 'Claeje'
     ]
 ];
 
@@ -29,7 +37,8 @@ $DBS['articles'] = [
         'id' => 'claart',
         'name' => 'nombre',
         'price' => 'Pvp1',
-        'hasvariant' => 'tyc'
+        'hasvariant' => 'tyc',
+        'taxid' => 'Tiva'
     ]
 ];
 

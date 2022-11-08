@@ -157,7 +157,7 @@ function create_modal(
         el.classList.add("w100");
         output[element.name] = "";
         let placeholder = document.createElement("option");
-        placeholder.innerText = element. ;
+        placeholder.innerText = "Seleccione una opción";
         el.appendChild(placeholder);
         let i = 0;
         element.value.forEach((opt) => {

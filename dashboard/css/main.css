@@ -318,6 +318,23 @@ body {
   padding-right: 10px;
 }
 
+.disabled {
+  background-color: rgb(214, 214, 214);
+  color: gray;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.disabled:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.disabled:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .sidebutton {
   height: 50px;
   width: 100%;
@@ -340,7 +357,7 @@ body {
   color: #005ad9;
 }
 
-.article{
+.article {
   cursor: pointer;
   border-radius: 5px;
   box-sizing: border-box;
@@ -401,6 +418,13 @@ searchitem {
 searchitem:hover {
   background-color: #e6f0ff;
   color: #006aff;
+}
+
+loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input:focus {
