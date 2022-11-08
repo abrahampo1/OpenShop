@@ -1,5 +1,5 @@
 let output = {};
-console.log('hola')
+console.log("hola");
 function create_modal(
   data = [
     { type: "text", tag: "h1", text: "Example" },
@@ -26,8 +26,8 @@ function create_modal(
     closeBtn.classList.add("close");
     closeBtn.innerHTML = '<iconify-icon icon="mdi:close"></iconify-icon>';
     closeBtn.onclick = () => {
-      $(baseModal).fadeOut("fast", ()=>{
-        baseModal.remove()
+      $(baseModal).fadeOut("fast", () => {
+        baseModal.remove();
       });
     };
     baseModal.appendChild(closeBtn);
@@ -157,19 +157,15 @@ function create_modal(
         el.classList.add("w100");
         output[element.name] = "";
         let placeholder = document.createElement("option");
-        placeholder.innerText = element.placeholder;
+        placeholder.innerText = element. ;
         el.appendChild(placeholder);
-        api({
-          resource: "obtener_tabla",
-          tabla: element.table,
-          columna: element.column,
-        }).then((r) => {
-          r.forEach((opt) => {
-            let op = document.createElement("option");
-            op.value = opt.id;
-            op.innerText = opt[element.column];
-            el.appendChild(op);
-          });
+        let i = 0;
+        element.value.forEach((opt) => {
+          let op = document.createElement("option");
+          op.value = i;
+          op.innerText = opt;
+          el.appendChild(op);
+          i++;
         });
         el.onchange = () => {
           output[element.name] = el.value;
