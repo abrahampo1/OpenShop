@@ -10,7 +10,7 @@ include('../../../../../functions.php');
     <div class="flex">
         <h3 class="w30">Empresa</h3>
         <select onchange="settings('RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS', this.value)" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%" id="bussiness">
-    <option value="">-= Seleccione =-</option>
+            <option value="">-= Seleccione =-</option>
             <?php
             $def = sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS"');
             if ($def) {
@@ -24,6 +24,7 @@ include('../../../../../functions.php');
 
             ?>
         </select>
+
     </div>
     <br>
     <div class="flex">
@@ -40,6 +41,29 @@ include('../../../../../functions.php');
             <?php
             }
 
+            ?>
+        </select>
+    </div>
+    <br>
+    <div class="flex">
+        <h3 class="w30">Serie</h3>
+        <select name="" id="" onchange="settings('RGDB_CLASSGES6_INVOICE_DEFAULT_SERIES', this.value)" class="select" style="padding-left: 10px; padding-right: 10px; width: 70%">
+            <?php
+
+            $letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            $def = sql_data('SELECT * FROM rg_settings WHERE name = "RGDB_CLASSGES6_INVOICE_DEFAULT_SERIES"');
+            if ($def) {
+                $def = $def->value;
+                $def = trim($def);
+            }
+            var_dump($def);
+            foreach ($letters as $value) {
+            ?>
+
+                <option <?= ($def == $value) ? 'selected' : '' ?> value="<?= $value ?>"><?= strtoupper($value) ?></option>
+
+            <?php
+            }
             ?>
         </select>
     </div>
