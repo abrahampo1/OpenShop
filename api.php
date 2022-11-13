@@ -22,6 +22,11 @@ switch (post('resource', true)) {
         $cols = substr($cols, 0, -1);
         echo "SELECT $cols FROM $table_name";
         break;
+    case 'CreateInvoice':
+            include_once 'databases/classicges6/structure.php';
+            $table_data = $DBS['invoices'];
+            echo $table_data['create'](post('clientID', true), post('reference', true), post('totalnotax', true), post('total', true) );
+            break;
     case 'obtener_tabla':
         $table = post('tabla');
         $column = post('columna');

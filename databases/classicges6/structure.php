@@ -11,15 +11,22 @@ $DBS = array();
 
 //FACTURAS
 $DBS['invoices'] = [
-    'create' => function ($clientID, $reference, $total) {
+    'create' => function ($clientID, $reference, $totalnotax, $totaltax) {
         include_once('function.php');
         $bussinesID = sql_data("SELECT value FROM rg_settings WHERE name = 'RGDB_CLASSGES6_INVOICE_DEFAULT_BUSSINESS'")->value;
         $campaignID = sql_data("SELECT value FROM rg_settings WHERE name = 'RGDB_CLASSGES6_INVOICE_DEFAULT_CAMPAIGN'")->value;
         $serial = sql_data("SELECT value FROM rg_settings WHERE name = 'RGDB_CLASSGES6_INVOICE_DEFAULT_SERIES'")->value;
         $invoiceID = send_query('SELECT TOP 1 Clafac as id FROM factura ORDER BY Clafac DESC');
         $invoiceID = $invoiceID[0]['id'] + 1; //Siguiente Clafac
+        $number = send_query('SELECT TOP 1 numero as id FROM factura ORDER BY Clafac DESC');
+        $number = $number[0]['id'] + 1; //Siguiente Numero
 
-        $sql = "INSERT INTO factura (Clafac, Claeje, Claemp, Serie) VALUES ($invoiceID, $campaignID, $bussinesID, '$serial')";
+        $year = date('Y');
+        $month = date('m');
+        $day = date('d');
+        $serial = strtoupper($serial);
+        $sql = "INSERT INTO factura (Clafac, Claeje, Claemp, Serie, Numero, Clacli,fecha, fechavalor, feccobro, referencia, bimpo, importe) VALUES ($invoiceID, $campaignID, $bussinesID, '$serial', $number, $clientID, DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), '$reference', $totalnotax, $totaltax)";
+        return $sql;
     },
     'table' => 'factura',
     'columns' => [
@@ -97,6 +104,3 @@ $DBS['sizes'] = [
         'name' => 'Nomtal',
     ]
 ];
-
-
-$DBS['invoices']['create']('', '', '');

@@ -4,21 +4,28 @@ include('../../../../../functions.php');
 
 ?>
 <script>
-    var taxes = {
-        1: 21,
-        2: 10,
-        3: 4,
-        4: 0
+var taxes = {
+    1: 21,
+    2: 10,
+    3: 4,
+    4: 0
+}
+
+var createdata = {
+    client: {
+        required: true,
+    },
+    reference: {
+        required: false
+    },
+    total: {
+        required: true,
+    },
+    totalnotax: {
+        required: true
     }
 
-    var createdata = {
-        client: {
-            required: true,
-        },
-        reference: {
-            required: false
-        }
-    }
+}
 </script>
 
 
@@ -28,7 +35,7 @@ include('../../../../../functions.php');
             <div></div>
             <div class="flex">
                 <div class="hsep"></div>
-                <button class="button primary" onclick="createFile()">Guardar</button>
+                <button class="button primary" onclick="create_invoice()">Guardar</button>
             </div>
         </div>
         <br>
@@ -37,7 +44,9 @@ include('../../../../../functions.php');
                 <h3 class=" w100">Cliente</h3>
             </div>
             <div class="w70">
-                <input type="text" class="w100" onfocus="this.classList.remove('success'); this.value=''" placeholder="Buscar por nombre..." oninput="search('clients', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name']; this.classList.add('success')})">
+                <input type="text" class="w100" onfocus="this.classList.remove('success'); this.value=''"
+                    placeholder="Buscar por nombre..."
+                    oninput="search('clients', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name']; this.classList.add('success')})">
             </div>
         </div>
         <div class="flex center">
@@ -45,7 +54,8 @@ include('../../../../../functions.php');
                 <h3 class=" w100">Referencia</h3>
             </div>
             <div class="w70">
-                <input type="text" class="w100" placeholder="Escribe una referencia...">
+                <input type="text" class="w100" placeholder="Escribe una referencia..."
+                    onchange="createdata['reference']['value'] = this.value">
             </div>
         </div>
         <div class="flex center">
@@ -53,7 +63,9 @@ include('../../../../../functions.php');
         </div>
         <div class="flex center">
             <div class="w100">
-                <input type="text" id="article" class="w100" onfocus="this.classList.remove('success'); this.value=''" oninput="search('articles', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name'];this.dataset['selid'] = r['id']; this.classList.add('success')})" placeholder="Buscar por referencia, nombre, ...">
+                <input type="text" id="article" class="w100" onfocus="this.classList.remove('success'); this.value=''"
+                    oninput="search('articles', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name'];this.dataset['selid'] = r['id']; this.classList.add('success')})"
+                    placeholder="Buscar por referencia, nombre, ...">
             </div>
             <div style="margin: 5px"></div>
             <div class=" flex center" style="justify-content: center;">
@@ -89,7 +101,9 @@ include('../../../../../functions.php');
                 <h3 class=" w100">Enviar por correo</h3>
             </div>
             <div class="w70">
-                <input type="text" disabled class="w100" onfocus="this.classList.remove('success'); this.value=''" placeholder="Correo electrónico del cliente..." oninput="search('clients', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name']; this.classList.add('success')})">
+                <input type="text" disabled class="w100" onfocus="this.classList.remove('success'); this.value=''"
+                    placeholder="Correo electrónico del cliente..."
+                    oninput="search('clients', 'name', this).then(r=>{createdata['client']['value']=r['id']; this.value=r['name']; this.classList.add('success')})">
             </div>
         </div>
         <div class="flex center disabled">
@@ -114,78 +128,78 @@ include('../../../../../functions.php');
 
 
 <script>
-    async function createFile() {
-        Object.entries(createdata).forEach(([key, value]) => {
-            console.log(value)
-            if (value['required'] && !value['value']) {
-                alert('Necesitas indicar el campo "' + key + '"')
-                return;
-            }
-        })
-
-        let cart = JSON.parse(localStorage.getItem('temp-cart')) || false;
-        if (!cart) {
-            alert('No se puede crear una factura vacía')
+async function createFile() {
+    Object.entries(createdata).forEach(([key, value]) => {
+        console.log(value)
+        if (value['required'] && !value['value']) {
+            alert('Necesitas indicar el campo "' + key + '"')
             return;
         }
+    })
 
-        let invoiceID = api({
-            resource: 'create_row',
-            table: 'invoices',
-            
-        })
-
+    let cart = JSON.parse(localStorage.getItem('temp-cart')) || false;
+    if (!cart) {
+        alert('No se puede crear una factura vacía')
+        return;
     }
 
-    function add_article() {
-        let art = $('#article').data('selid');
-        $('#article').removeClass('success')
-        $('#article').val('')
-        if (!art) {
-            alert('oh oh')
-        }
+    let invoiceID = api({
+        resource: 'create_row',
+        table: 'invoices',
 
-        let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
+    })
 
-        cart.push()
-        let cartIndex;
+}
 
-        let cartArticle = cart.findIndex(function(ar) {
-            return ar.id == art
-        });
-        console.log(cartArticle)
-        if (cartArticle >= 0) {
-            cart[cartArticle].quantity++;
+function add_article() {
+    let art = $('#article').data('selid');
+    $('#article').removeClass('success')
+    $('#article').val('')
+    if (!art) {
+        alert('oh oh')
+    }
+
+    let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
+
+    cart.push()
+    let cartIndex;
+
+    let cartArticle = cart.findIndex(function(ar) {
+        return ar.id == art
+    });
+    console.log(cartArticle)
+    if (cartArticle >= 0) {
+        cart[cartArticle].quantity++;
+        localStorage.setItem('temp-cart', JSON.stringify(cart))
+        load_cart()
+    } else {
+        api({
+            resource: 'search_table_id',
+            column: ['name', 'id', 'price', 'hasvariant', 'taxid'],
+            table: 'articles',
+            value: art
+        }).then(r => {
+            let article = r[0]
+            let id = article.id
+            article.tax = taxes[article.taxid]
+            article.quantity = 1;
+            cart.push(article)
             localStorage.setItem('temp-cart', JSON.stringify(cart))
+
             load_cart()
-        } else {
-            api({
-                resource: 'search_table_id',
-                column: ['name', 'id', 'price', 'hasvariant', 'taxid'],
-                table: 'articles',
-                value: art
-            }).then(r => {
-                let article = r[0]
-                let id = article.id
-                article.tax = taxes[article.taxid]
-                article.quantity = 1;
-                cart.push(article)
-                localStorage.setItem('temp-cart', JSON.stringify(cart))
-
-                load_cart()
-            })
-        }
-
+        })
     }
 
-    function load_cart() {
-        let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
-        $('#items').html('')
-        let i = 0;
-        let total = 0
-        let tax = 0;
-        cart.forEach(article => {
-            $('#items').append(`
+}
+
+function load_cart() {
+    let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
+    $('#items').html('')
+    let i = 0;
+    let total = 0
+    let tax = 0;
+    cart.forEach(article => {
+        $('#items').append(`
                 <div class="flex center article" onclick="modify_cart(${i})">
                     <p class="w30">${article.name}</p>
                     <p class="w30 text-center">x${article.quantity}</p>
@@ -193,113 +207,126 @@ include('../../../../../functions.php');
                     <p class="w20f text-right" >${((article.price * 100) * article.quantity / 100)} €</p>
                 </div>
                 `)
-            i++;
-            tax += ObtenerIVA(((article.price * 100) * article.quantity / 100), article.tax)
-            total += ((article.price * 100) * article.quantity / 100);
-            $('#subtotal').text(total.toFixed(2) + ' €')
-            $('#total').text(total.toFixed(2) + ' €')
-            $('#tax').text(tax.toFixed(2) + ' €')
-        });
-    }
+        i++;
+        tax += ObtenerIVA(((article.price * 100) * article.quantity / 100), article.tax)
+        total += ((article.price * 100) * article.quantity / 100);
+        $('#subtotal').text(total.toFixed(2) + ' €')
+        $('#total').text(total.toFixed(2) + ' €')
+        $('#tax').text(tax.toFixed(2) + ' €')
 
-    async function modify_cart(id) {
-        let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
-        let article = cart[id];
-        let modal = [{
-            type: 'text',
-            tag: 'h1',
-            text: 'Modificar Artículo'
-        }, {
-            type: "div",
-            tag: "div",
-            classList: ["flex", "center"],
-            content: [{
-                    type: "text",
-                    tag: "h3",
-                    text: "Nombre",
-                    classList: ["w30"],
-                },
-                {
-                    type: "input",
-                    tag: "input",
-                    value: article.name.trim(),
-                    required: true,
-                    placeholder: "Nombre....",
-                    name: "name",
-                    classList: ["w70"],
-                },
-            ],
-        }, {
-            type: "div",
-            tag: "div",
-            classList: ["flex", "center"],
-            content: [{
-                    type: "text",
-                    tag: "h3",
-                    text: "Precio",
-                    classList: ["w30"],
-                },
-                {
-                    type: "input",
-                    tag: "input",
-                    value: article.price,
-                    required: true,
-                    placeholder: "Precio....",
-                    name: "price",
-                    classList: ["w70"],
-                },
-            ],
-        }, {
-            type: "div",
-            tag: "div",
-            classList: ["flex", "center"],
-            content: [{
-                    type: "text",
-                    tag: "h3",
-                    text: "Cantidad",
-                    classList: ["w30"],
-                },
-                {
-                    type: "input",
-                    tag: "input",
-                    value: article.quantity,
-                    required: true,
-                    placeholder: "Cantidad....",
-                    name: "quantity",
-                    classList: ["w70"],
-                },
-            ],
-        }, {
-            type: "div",
-            tag: "div",
-            classList: ["flex", "center"],
-            content: [{
-                    type: "text",
-                    tag: "h3",
-                    text: "Impuesto",
-                    classList: ["w30"],
-                },
-                {
-                    type: "input",
-                    tag: "input",
-                    value: article.tax,
-                    required: true,
-                    placeholder: "Porcentaje....",
-                    name: "tax",
-                    classList: ["w70"],
-                },
-            ],
-        }]
+        createdata['total']['value'] = total.toFixed(2);
+        createdata['totalnotax']['value'] = (total - tax).toFixed(2);
+    });
+}
 
-        create_modal(modal).then(r => {
-            Object.entries(r).forEach(([key, value]) => {
-                cart[id][key] = value;
-                localStorage.setItem('temp-cart', JSON.stringify(cart))
-                load_cart()
-            })
+async function modify_cart(id) {
+    let cart = JSON.parse(localStorage.getItem('temp-cart')) || [];
+    let article = cart[id];
+    let modal = [{
+        type: 'text',
+        tag: 'h1',
+        text: 'Modificar Artículo'
+    }, {
+        type: "div",
+        tag: "div",
+        classList: ["flex", "center"],
+        content: [{
+                type: "text",
+                tag: "h3",
+                text: "Nombre",
+                classList: ["w30"],
+            },
+            {
+                type: "input",
+                tag: "input",
+                value: article.name.trim(),
+                required: true,
+                placeholder: "Nombre....",
+                name: "name",
+                classList: ["w70"],
+            },
+        ],
+    }, {
+        type: "div",
+        tag: "div",
+        classList: ["flex", "center"],
+        content: [{
+                type: "text",
+                tag: "h3",
+                text: "Precio",
+                classList: ["w30"],
+            },
+            {
+                type: "input",
+                tag: "input",
+                value: article.price,
+                required: true,
+                placeholder: "Precio....",
+                name: "price",
+                classList: ["w70"],
+            },
+        ],
+    }, {
+        type: "div",
+        tag: "div",
+        classList: ["flex", "center"],
+        content: [{
+                type: "text",
+                tag: "h3",
+                text: "Cantidad",
+                classList: ["w30"],
+            },
+            {
+                type: "input",
+                tag: "input",
+                value: article.quantity,
+                required: true,
+                placeholder: "Cantidad....",
+                name: "quantity",
+                classList: ["w70"],
+            },
+        ],
+    }, {
+        type: "div",
+        tag: "div",
+        classList: ["flex", "center"],
+        content: [{
+                type: "text",
+                tag: "h3",
+                text: "Impuesto",
+                classList: ["w30"],
+            },
+            {
+                type: "input",
+                tag: "input",
+                value: article.tax,
+                required: true,
+                placeholder: "Porcentaje....",
+                name: "tax",
+                classList: ["w70"],
+            },
+        ],
+    }]
+
+    create_modal(modal).then(r => {
+        Object.entries(r).forEach(([key, value]) => {
+            cart[id][key] = value;
+            localStorage.setItem('temp-cart', JSON.stringify(cart))
+            load_cart()
         })
-    }
+    })
+}
 
 
-    load_cart()
+function create_invoice() {
+    api({
+        resource: 'CreateInvoice',
+        clientID: createdata['client']['value'],
+        reference: createdata['client']['value'],
+        totalnotax: createdata['totalnotax']['value'],
+        total: createdata['total']['value']
+    })
+}
+
+load_cart()
 </script>
