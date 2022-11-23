@@ -52,7 +52,7 @@ function error($text)
     exit();
 }
 
-function sql_array($table, $columns = [], $search_cols = null, $search_value = null)
+function sql_array($table, $columns = [], $search_cols = null, $search_value = null, $order = [])
 {
     include_once 'databases/classicges6/function.php';
     include 'databases/classicges6/structure.php';
@@ -74,7 +74,15 @@ function sql_array($table, $columns = [], $search_cols = null, $search_value = n
     }
     $search = substr($search, 0, -3);
 
-    return send_query("SELECT $cols FROM $table_name $search");
+    $or = '';
+    if ($order != []) {
+        $or = ' ORDER BY ';
+        foreach ($order as $key => $value) {
+            $or .= $table_data['columns'][$value[0]] . ' ' . $value[1];
+        }
+    }
+
+    return send_query("SELECT $cols FROM $table_name $search $or");
 }
 
 function sql_by_id($table, $columns, $id)

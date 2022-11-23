@@ -1,4 +1,4 @@
-window.$ = window.jQuery = require("jquery");
+// window.$ = window.jQuery = require("jquery");
 
 function redirect(url) {
   location.replace(url);

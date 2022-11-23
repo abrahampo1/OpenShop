@@ -13,8 +13,8 @@
     <?php
 
     if (existe('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')) {
-       // $val  = sql_data('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')['value'];
-       // echo '<script src="/db_cores/' . $val . '/index.js"></script>';
+        // $val  = sql_data('SELECT * FROM rg_settings WHERE name = "RG_DATABASE_CORE"')['value'];
+        // echo '<script src="/db_cores/' . $val . '/index.js"></script>';
     }
 
     ?>
@@ -121,37 +121,48 @@
         </div>
     </div>
     <div id="background"></div>
+    <div id="loading" style="display: none;">
+        <div style="text-align: center;">
+            <iconify-icon icon="line-md:uploading-loop" style="font-size: 100px; text-align: center"></iconify-icon>
+            <br>
+            <br>
+            <br>
+            <div class="text">
+                Ejemplo
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
 
 <script>
-$('.sidebar-app-list').on('click', (e => {
-    $('.sidebar-app-list').removeClass('selected')
-    let h = $(e.currentTarget).find('.list').hasClass('hide')
-    $('.sidebar-app-list .list').addClass('hide')
-    if (h) {
-        $(e.currentTarget).find('.list').removeClass('hide')
-        $(e.currentTarget).addClass('selected')
-    } else {
-        $(e.currentTarget).find('.list').addClass('hide')
+    $('.sidebar-app-list').on('click', (e => {
+        $('.sidebar-app-list').removeClass('selected')
+        let h = $(e.currentTarget).find('.list').hasClass('hide')
+        $('.sidebar-app-list .list').addClass('hide')
+        if (h) {
+            $(e.currentTarget).find('.list').removeClass('hide')
+            $(e.currentTarget).addClass('selected')
+        } else {
+            $(e.currentTarget).find('.list').addClass('hide')
 
+        }
+
+
+    }))
+    $('#background').fadeOut('fast')
+    $('#background').on('click', (e => {
+        toggle_sidebar();
+    }))
+
+    function toggle_sidebar() {
+        $('.sidebar').toggleClass('hide');
+        $('.index').toggleClass('maximized')
+        $('.sidebar-app-list .list').addClass('hide')
+        $('#background').fadeToggle('fast')
+        $('.sidebar-app-list').removeClass('selected')
     }
-
-
-}))
-$('#background').fadeOut('fast')
-$('#background').on('click', (e => {
-    toggle_sidebar();
-}))
-
-function toggle_sidebar() {
-    $('.sidebar').toggleClass('hide');
-    $('.index').toggleClass('maximized')
-    $('.sidebar-app-list .list').addClass('hide')
-    $('#background').fadeToggle('fast')
-    $('.sidebar-app-list').removeClass('selected')
-}
 </script>
 
 

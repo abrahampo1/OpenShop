@@ -20,13 +20,17 @@ $DBS['invoices'] = [
         $invoiceID = $invoiceID[0]['id'] + 1; //Siguiente Clafac
         $number = send_query('SELECT TOP 1 numero as id FROM factura ORDER BY Clafac DESC');
         $number = $number[0]['id'] + 1; //Siguiente Numero
-
+        $client = send_query('SELECT * FROM clientes WHERE clacli = ' . $clientID)[0];
+        $nomcli = $client['nombre'];
         $year = date('Y');
         $month = date('m');
         $day = date('d');
         $serial = strtoupper($serial);
-        $sql = "INSERT INTO factura (Clafac, Claeje, Claemp, Serie, Numero, Clacli,fecha, fechavalor, feccobro, referencia, bimpo, importe) VALUES ($invoiceID, $campaignID, $bussinesID, '$serial', $number, $clientID, DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), '$reference', $totalnotax, $totaltax)";
-        return $sql;
+        $sql = "INSERT INTO factura (Clafac, Claeje, Claemp, Serie, Numero, Clacli, Nomcli,fecha, fechavalor, feccobro, referencia, bimpo, importe) VALUES ($invoiceID, $campaignID, $bussinesID, '$serial', $number, $clientID, '$nomcli' , DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), DATETIME($year, $month, $day, 12, 0, 0), '$reference', $totalnotax, $totaltax)";
+        send_query($sql);
+        $invoiceID = send_query('SELECT TOP 1 Clafac as id FROM factura ORDER BY Clafac DESC');
+        $invoiceID = $invoiceID[0]['id'] + 1; //Siguiente Clafac
+        return $invoiceID;
     },
     'table' => 'factura',
     'columns' => [
